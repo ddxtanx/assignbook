@@ -3,7 +3,22 @@ bodyParser = require("body-parser"),
 sessions = require("client-sessions"),
 account = require("../app/account.js"),
 classes = require("../app/classes.js"),
-myPage = require("../app/myPage.js");
+myPage = require("../app/myPage.js"),
+minify = require("../app/min.js"),
+compression = require("compression");
+var compOptions = {
+  level: 9,
+  filter: shouldCompress
+}
+function shouldCompress (req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res)
+}
 var server = express();
 server.set('views', './public');
 server.use(bodyParser(), express.static("./public"), sessions({
@@ -11,7 +26,7 @@ server.use(bodyParser(), express.static("./public"), sessions({
   secret: process.env.SESSION_SECRET,
   duration: 60 * 60 * 1000,
   activeDuration: 30 * 60 * 1000
-}));
+}), compression(compOptions));
 function checkIn(req, res, callback){
   if(!req.session.active){
     console.log("Catching attempted visit without login");
@@ -143,4 +158,7 @@ server.post("/forgot", function(req, res){
 server.post("/change", function(req, res){
   account.change(req, res);
 })
+server.get("/min", function(req, res){
+  minify.minify(req, res);
+});
 module.exports = server;
