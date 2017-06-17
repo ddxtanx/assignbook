@@ -161,4 +161,7 @@ server.post("/change", function(req, res){
 server.get("/min", function(req, res){
   minify.minify(req, res);
 });
+server.get("/public/*", function(req, res){
+  res.end();
+})
 module.exports = server;
