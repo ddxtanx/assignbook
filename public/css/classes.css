@@ -1,0 +1,44 @@
+#add {
+    margin-top: 2em;
+}
+
+hr {
+    background-color: #ddd;
+    border: 0 none;
+    height: 2px;
+}
+
+.class {
+    background-color: #EEE;
+    height: auto;
+    clear: both;
+}
+
+.class * {
+    display: inline;
+}
+
+.viewClass {
+    float: right;
+    font-size: 2vw;
+    display: inherit;
+}
+
+.btn-link {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #0000EE;
+    font-size:3vw;
+}
+
+#classesDiv {
+    height: auto;
+}
+@media all and (max-width: 600px) and (orientation:portrait) 
+{
+    .btn-link{
+        font-size:6vw;
+    }
+}

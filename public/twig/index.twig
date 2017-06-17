@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- ****** faviconit.com favicons ****** -->
+  <link rel="shortcut icon" href="favicons/favicon.ico">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="favicons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="favicons/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="160x160" href="favicons/favicon-160.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="favicons/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16.png">
+  <link rel="apple-touch-icon" href="favicons/favicon-57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="favicons/favicon-114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="favicons/favicon-72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="favicons/favicon-144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="favicons/favicon-60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="favicons/favicon-120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="favicons/favicon-76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="favicons/favicon-152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/favicon-180.png">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="favicons/favicon-144.png">
+  <meta name="msapplication-config" content="favicons/browserconfig.xml">
+  <!-- ****** faviconit.com favicons ****** -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type="text/css" rel="stylesheet" href="css/sidebar.css" />
+  <title> Easy AssignBook </title>
+  <script>
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+  var isLoggedIn;
+  $(document).ready(function() {
+    isLoggedIn = {{loggedin}};
+    if (isLoggedIn == 1) {
+      var username = escapeHtml("{{name}}");
+      $("#name").text("Welcome, " + username + "!");
+    } else {
+      $("#name").text("Welcome, Guest!");
+    }
+  });
+  </script>
+  <script>
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-75603673-4', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script type="text/javascript" src="js/sidebar.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+</head>
+
+<body>
+  <div id="wrapper" class="toggled">
+
+    <!-- Sidebar -->
+    {% include 'twig/sidebar.twig' %}
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>Easy AssignBook</h1>
+            <h2>Welcome to the Assignment Tracker!</h3>
+              <h3>Purpose</h3>
+              <h4> Sometimes, school can be a pain. A assignment sheet could be forgotten, a homework announced could be missed, you might have been napping, but somebody was paying attention! This site is designed so students can share what
+                happened in class, to everyone in the class. Forgot what your teacher was putting on the test? No problem! Just ask your classmates on the class page! Forgot what your homework was for tonight? Just look at your homework
+                page! Didn't take notes in class? Somebody already shared them! Your school experience will be so much easier when you use Easy AssignBook!
+              </h4>
+              <h3>How To Use</h3>
+              <h4>The first thing you have to do is <span><a href="./web/register">register!</a></span> Then, once you have registered, you can go and <span><a href="./web/login">login!</a></span> Once you have logged in you can browse,
+                and search though, all the available classes. If you can find your class, you can easily add it! From there, you can visit that classes' page and enroll in it to recieve it's homework. You can also view and add notes,
+                to help with studying and review. Along with all of that, you can ask, answer, and view questions your classmates have asked. Finally, there is the My Classes & Homework page. There you can view all of your classes
+                in one easy to access place and view all of the homework from those classes! When you have completed an assignment, you can check the box next to it to complete it. Below is a complete list of all available features!
+              </h4>
+              <h3> Current Features </h3>
+              <h4> Currently, you can: </h4>
+              <ul>
+                <li>
+                  <h4> Register & Login </h4>
+                </li>
+                <li>
+                  <h4> Add Classes To The Site </h4>
+                </li>
+                <li>
+                  <h4> Enroll In Classes </h4>
+                </li>
+                <li>
+                  <h4> Add Homework To Classes </h4>
+                </li>
+                <li>
+                  <h4> Manage Your Homework (Adding And Completing Assignments)</h4>
+                </li>
+                <li>
+                  <h4> Ask Questions Pubicly Or Anonymously </h4>
+                </li>
+                <li>
+                  <h4> Answer Questions Publicly Or Anonymously </h4>
+                </li>
+                <li>
+                  <h4> Create Reminders </h4>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+  </body>
+</body>
+
+</html>

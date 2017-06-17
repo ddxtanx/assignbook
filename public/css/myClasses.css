@@ -1,0 +1,61 @@
+#myClassesTitle {
+    text-align: center;
+}
+
+hr {
+    background-color: #ddd;
+    border: 0 none;
+    height: 2px;
+}
+
+.class {
+    background-color: #EEE;
+    top: auto;
+    bottom: auto;
+    word-wrap: break-word;
+}
+
+.class * {
+    display: inline;
+}
+
+.viewClass {
+    float: right;
+    font-size: 3em;
+    display: inherit;
+}
+
+.btn-link {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #0000EE;
+    padding: 0;
+}
+
+.homeworkClass {
+    background-color: #EEE;
+}
+
+.remind{
+    background-color: #EEE;
+    word-wrap: break-word;
+}
+.remindText{
+    padding-bottom:1vh;
+}
+.completedForm {
+    float: right;
+    padding-right: 2em;
+}
+
+.completedLabel {
+    font-size: 2em;
+    z-index:0;
+}
+
+.checks {
+    padding-left: 1em;
+    transform: scale(1.5);
+}

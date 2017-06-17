@@ -1,0 +1,4 @@
+userId ---- ID of the user
+name ----- username of the user
+loggedin ------ wether or not the user is logged in
+email ------ email of the iser

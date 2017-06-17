@@ -1,0 +1,48 @@
+#title {
+    text-align: center;
+}
+
+hr {
+    background-color: #ddd;
+    border: 0 none;
+    height: 2px;
+}
+
+.homeworkClass {
+    background-color: #EEE;
+}
+
+.notesClass {
+    background-color: #EEE;
+}
+
+.questionsClass {
+    background-color: #EEE;
+}
+
+#displayNotes {
+    height: auto;
+}
+
+#homeworkDiv {
+    height: auto;
+}
+
+.answerSection {
+    padding-left: 2em;
+}
+
+.answersClass {
+    padding-left: 4em;
+    background-color: #DED;
+}
+
+.input-group {
+    width: 3.5vw;
+}
+.close{
+    transform: scale(2);
+    margin-right: 1vw;
+    margin-top: 1vh;
+    color: #AC0000;
+}

@@ -1,0 +1,138 @@
+
+<head>
+  {% include "../favicons/favicon.twig" %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/myClasses.css"/>
+  <link rel="stylesheet" href="css/sidebar.css"/>
+  <script>
+  var classesArray = [{{classesArray}}];
+  var homeworkArray = [{{homeworkArray}}];
+  var remindersArray = [{{remindersArray}}];
+  //Creates homeworkArray and remindersArray for myClasses.js to use
+  </script>
+  <script>
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-75603673-4', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/myClasses.js"></script>
+</head>
+
+<body>
+</body>
+<div id="wrapper" class="toggled">
+  {% include "./sidebar.twig" %}
+  <div id="page-content-wrapper">
+    <div id="myClassesUpper">
+      <h1 id="myClassesTitle"> My Classes & Homework</h1>
+      <ul>
+        <li>
+          <a href="#myClasses"> My Classes </a>
+        </li>
+        <li>
+          <a href="#myHomework"> My Homework </a>
+        </li>
+        <li>
+          <a href="#myReminders"> My Reminders </a>
+        </li>
+      </ul>
+    </div>
+    <hr/>
+    <div id="myClasses">
+      <label for="searchBar">Search for a class here! </label>
+      <input type="text" class="search" name="nameSearchBar" id="nameSearchBar" placeholder="Class' name:"></input>
+      <input type="text" class="search" name="teacherSearchBar" id="teacherSearchBar" placeholder="Teacher's name:"></input>
+      <input type="number" class="search" name="periodSearchBar" id="periodSearchBar" placeholder="Class' period:"></input>
+      <div id="classesDiv">
+        {% for class in classesArray %}
+        <div class='class class{{loop.index}}'>
+          <h4 class='period'> Period {{class.classPeriod}}: </h4>
+          <br/>
+          <h1 class='className'>{{class.className}}</h1>
+          <form action='./viewClass' method='POST'>
+            <button type='submit' class='btn-link viewClass'>View Class</button>
+            <input type='hidden' name='name' value='{{class.className}}'></input>
+            <input type='hidden' name='period' value='{{class.classPeriod}}'></input>
+            <input type='hidden' name='teacher' value='{{class.classTeacher}}'></input>
+          </form>
+          <br/>
+          <h3 class='taughtBy'> Taught By: {{class.classTeacher}} </h3>
+        </div>
+        <br class='class class{{loop.index}}'/>
+        {% endfor %}
+      </div>
+    </div>
+    <hr/>
+    <div id="myHomework">
+      <h3> Here is all of your homework! </h3>
+      <label for="showCompleted"> Show Completed Assignments? </label>
+      <input type="checkbox" id="showCompleted"></input>
+      <br/>
+      <h4 id="successFail" class="alert alert-success">Successfully Deleted</h4>
+      <button class="btn btn-warning" id="deleteCompleted">Delete Completed Homework?</button>
+      <br/>
+      <label for='date'>Input a date here to see what homework you have that day! </label>
+      <input id="date" type="date"></input>
+      <div id="homework">
+        {% for homework in homeworkArray %}
+        <div id='homework{{loop.index}}' class='homeworkClass {{(homework.completed)?"completed":"notCompleted"}} homework{{loop.index}}'>
+          <h3>  {{homework.assignmentName}}</h3>
+          <div class='completedForm'>
+            <label class='completedLabel' for='completedCheck'> Completed? </label>
+            <input type='checkbox' class='checks' id='completedCheck{{loop.index}}' homeworkname='{{homework.assignmentName}}' descr='{{homework.description}}' name='completedCheck' {{(homework.completed)?"checked":""}}></input>\
+          </div>
+          <h4> For: {{homework.className}}</h4>
+          <h4 class="duedate" duedate="{{homework.dueDate}}"> Due: {{homework.dueDate}}, </h4>
+        <h5> {{homework.description}} </h5>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <hr/>
+  <div id="myReminders">
+    <h3> Here are your reminders! </h3>
+    <button class="btn btn-info" id="reminderButton">Add A Reminder?</button>
+    <div id="reminderForm">
+      <div>
+        <label for="reminder">Add Your Reminder Here:</label>
+        <br/>
+        <textarea id="reminder" placeholder="Reminder Here"></textarea>
+        <br/>
+        <button type="button" class="btn btn-success" name="submitReminder" onclick="addreminder()">Submit</input>
+        <br/>
+      </div>
+      <button class="btn btn-info" id="cancelReminder">Cancel</button>
+    </div>
+    <div id="reminders">
+      {% for reminder in remindersArray %}
+      <div id='reminder{{loop.index}}' class='remind'>
+        <div class='completedForm'>
+          <label class='completedLabel' for='completedCheck'> Completed? </label>
+          <input type='checkbox' class='reminderChecks' id='completedReminder{{loop.index}}' reminderID='{{reminder.reminderID}}'></input>
+          <br/>
+        </div>
+        <h3 class='remindText'> {{reminder.reminderText}}</h4>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>

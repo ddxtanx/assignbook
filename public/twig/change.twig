@@ -1,0 +1,52 @@
+<html>
+    <head>
+        {% include "../favicons/favicon.twig" %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/change.css"/>
+        <link rel="stylesheet" href="css/sidebar.css"/>
+        <script>
+            var siteId = '{{siteId}}';
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-75603673-4', 'auto');
+            ga('send', 'pageview');
+        </script>
+        <script src="js/sidebar.js"></script>
+        <script src="js/change.js"></script>
+    </head>
+    <body>
+        <div id="wrapper" class="toggled">
+            {% include "./sidebar.twig" %}
+            <div id="page-content-wrapper">
+                <h1>Ready to reset your password?</h1>
+                <h2 id="error" class="alert alert-danger"></h2>
+                <div>
+                    <h3>Please enter a password</h3>
+                    <input type="password" id="pass1" required/>
+                    <h3>Please type it again</h3>
+                    <input type="password" id="pass2" required/>
+                    <br/>
+                    <button type="button" class="btn btn-success" onclick="resetPass()">Reset Your Password!</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

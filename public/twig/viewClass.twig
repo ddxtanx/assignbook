@@ -1,0 +1,226 @@
+<html>
+
+<head>
+  {% include "../favicons/favicon.twig" %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/sidebar.css"/>
+  <link rel="stylesheet" href="css/viewClass.css"/>
+  <script>
+  //Variable initilization
+  var className = "{{name}}";
+  var classPeriod = "{{period}}";
+  var classTeacher = "{{teacher}}";
+  var isLoggedIn = {{loggedin}};
+
+  var hasEnrolled = {{hasEnrolled}};
+
+  var homeworkArray = [{{homeworkArray}}];
+  var notesArray = [{{notesArray}}];
+  var answersArray = [{{answersArray}}];
+  homeworkArray.forEach(function(homework){
+    homework.dueDate = new Date(homework.dueDate);
+  });
+  notesArray.forEach(function(note){
+    note.date = new Date(note.date);
+  });
+  answersArray.forEach(function(answer){
+    answer.dateAnswered = new Date(answer.dateAnswered);
+  })
+  //These add arrays of homework, notes, and answers so viewclass.js can manipulate them.
+  </script>
+  <script>
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-75603673-4', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/viewclass.js"></script>
+</head>
+
+<body>
+</body>
+<div id="wrapper" class="toggled">
+  {% include "./sidebar.twig" %}
+  <div id="page-content-wrapper">
+    <div id="title">
+      <h4 id="period"></h4>
+      <h2 id="className"></h2>
+      <h3 id="teacher"></h3>
+    </div>
+    <div id="navigation">
+      <ul>
+        <li>
+          <a href="#homeworkSection">Class Homework</a>
+        </li>
+        <li>
+          <a href="#notesSection">Class Notes</a>
+        </li>
+        <li>
+          <a href="#qaSection">Q&A Section</a>
+        </li>
+      </ul>
+    </div>
+    <br/>
+    <div id="enrollForm">
+      {% if not hasEnrolled %}
+      <div id="enroll">
+        <button type="button" onclick="enroll('{{name}}', {{period}}, '{{teacher}}')" class="btn btn-info">Enroll</button>
+      </form>
+      {% else %}
+      <div id="unenroll">
+        <button type="button" onclick="enroll('{{name}}', {{period}}, '{{teacher}}')" class="btn btn-warning">Unenroll</button>
+      </form>
+      {% endif %}
+    </div>
+    <hr>
+    <div id="homeworkSection">
+      <h2> Homework for this class; the higher up the assignment is, the closer it is to being due </h2>
+      <button id="addHomeworkBtn" class="btn btn-info">Add Homework </button>
+      <div class="alert alert-danger" id="notLoggedIn">
+        You have to be logged in to add homework.
+      </div>
+      <div class="alert alert-danger" id="notEnrolled">
+        You have to be enrolled to add homework
+      </div>
+      {% if hasEnrolled %}
+      <div id="addHomework">
+        <form action="addHomework" method="POST" id="homeworkForm">
+          <h3> What is the name of the assignment? </h3>
+          <input type="text" id="homeworkName" placeholder="Input Name Here"></input>
+          <h3> Please Describe the assignment </h3>
+          <textarea id="homeworkDescription" form="homeworkForm"></textarea>
+          <h3> When is this due? </h3>
+          <input type="date" name="duedate" id="homeworkDate"></input>
+          <br/>
+          <br/>
+          <button type="button" class="btn btn-success" onclick="addHomework()">Submit</button>
+        </form>
+        <button id="cancel" class="btn btn-info"> Cancel </button>
+      </div>
+      {% endif %}
+      <br/>
+      <label for='date'>Input A Date Here to See What Homework You Have That Day! </label>
+      <input id="date" type="date"></input>
+      <div id="homeworkDiv">
+        {% for homework in homeworkArray %}
+        <div class='homeworkClass homework{{loop.index}}'>
+          {% if id == homework.userIDWhoAdded %}
+          <button type='button' class='close' aria-label='Close' onclick='deleteHomework(["{{homework.assignmentName}}", "{{homework.dueDate}}", "{{homework.description}}", {{loop.index}}]);'>
+            <span>&times;</span>
+          </button>
+          {% endif %}
+          <h3> {{homework.assignmentName}}</h3>
+          <h4> {{homework.dueDate}}</h4>
+          <h5> {{homework.description}}</h5>
+        </div>
+        {% endfor %}
+        </div>
+      </div>
+      <hr/>
+      <div id="notesSection">
+        <div id="addNotes">
+          <div id="addNotesButton">
+            <button id="addNotesBtn" class="btn btn-info">Add Notes</button>
+          </div>
+          {% if hasEnrolled %}
+          <div id="addNotesForm">
+            <div id="addNotesF">
+              <h3> Type Your Notes Here: </h3>
+              <textarea form="addNotesF" id="notesText" placeholder="Add notes here"></textarea>
+              <br/>
+              <button type="button" class="btn btn-success" onclick="addNotes()">Submit</button>
+            </div>
+            <button id="cancelNotes" class="btn btn-info">Cancel</button>
+          </div>
+          {% endif %}
+          <div class="alert alert-danger" id="notEnrolledNotes">
+            You have to be enrolled to add notes
+          </div>
+        </div>
+        <label for="notesDate">Input A Date Here to See What Notes Were Posted That Day</label>
+        <input id="notesDate" type="date"></input>
+        <div id="displayNotes">
+          {% for note in notesArray %}
+          <div class='notesClass notes{{loop.index}}'>
+              {% if id == note.userId %}
+              <!--<button type='button' class='close' aria-label='Close' onclick='deleteNote("{{note.note}}", "{{note.date}}", {{loop.index}});'>
+                <span>&times;</span>
+              </button> -->
+              {% endif %}
+              <h3> On: {{note.date}}</h3>
+              <h2> {{note.note}}</h2>
+          </div>
+          {% endfor %}
+          </div>
+        </div>
+        <hr/>
+        <div id="qaSection">
+          <button id="addQButton" class="btn btn-info"> Add A Question </button>
+          {% if hasEnrolled %}
+          <div id="addQuestion">
+            <div id="addQ">
+              <label for="question">What is your question?</label>
+              <input type="text" id="question"></input>
+              <br/>
+              <label for="anonymous">Do you want your question to be anonymous?</label>
+              <input type="checkbox" id="anonymous"></input>
+              <br/>
+              <button type="button" name="questionSubmit" class="btn btn-success" onclick="addQuestion()">Add Question</button>
+            </div>
+            <button id="cancelQButton" class="btn btn-info">Cancel</button>
+          </div>
+          {% endif %}
+          <div class="alert alert-danger" id="notEnrolledQuestions">
+            You have to be enrolled to add questions
+          </div>
+          <div id="questions">
+            {% for question in questionsArray %}
+            <div class='questionsClass question{{loop.index}}'>
+              <h3> Asked by:{{question.usernameDisplayed}}</h3>
+              <h3> On: {{question.dateAsked}}</h3>
+              <h4>{{question.question}}</h4>
+              <div class='answerSection'>
+                <div>
+                  <label for='anonCheckbox'>Do you want your answer to be anonymous?</label>
+                  <input type='checkbox' id="anonCheckbox{{loop.index}}"></input>
+                  <div class='input-group'>
+                    <textarea id='answer{{loop.index}}' placeholder='Put your answer here!'></textarea>
+                    <span class='input-group-btn'><button type='button' class='btn btn-success answerSubmit' onclick="addAnswer('{{question.questionId}}',{{loop.index}})">Add Answer</input></span>
+                  </div>
+                </div>
+                <div id='answersFor{{question.questionId}}'>
+                  {% for answer in question.answers %}
+                  <div class='answersClass answer{{loop.index}}'>
+                      <h3> Answered By: {{answer.usernameDisplayed}}</h3>
+                      <h3> On: {{answer.dateAnswered}}</h3>
+                      <h4>{{answer.answer}}</h4>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      </html>

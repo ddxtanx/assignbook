@@ -1,0 +1,48 @@
+<title>Easy AssignBook</title>
+<script>
+    var isLoggedIn;
+    $(document).ready(function() {
+        isLoggedIn = {{loggedin}};
+        if (isLoggedIn == 1) {
+            var username = "{{userName}}";
+            $("#name").text("Welcome, " + username + "!");
+        } else {
+            $("#name").text("Welcome, Guest!");
+        }
+        //This creates the 'Welcome, (name)' in the sidebar
+    });
+</script>
+<a id="hamDiv" class="btn btn-info btn-sm">
+    <span id="ham" class="glyphicon glyphicon-menu-hamburger"></span>
+</a>
+<div id="sidebar-wrapper" class="toggled">
+    <ul class="sidebar-nav">
+        <li class="sidebar-section siteTitle">
+            <a href="../">
+                            Class Grades
+                        </a>
+        </li>
+        <li class="sidebar-brand" id="name">
+
+        </li>
+        <br/>
+        {% if not loggedin %}
+        <li class="sidebar-section notLoggedIn">
+            <a href="./login">Login</a>
+        </li>
+        <li class="sidebar-section notLoggedIn">
+            <a href="./register">Register</a>
+        </li>
+        {%else%}
+        <li class="sidebar-section isLoggedIn">
+            <a href="./classes"> View Classes </a>
+        </li>
+        <li class="sidebar-section isLoggedIn" id="myClasses">
+            <a href="./myClasses"> My Classes & Homework</a>
+        </li>
+        <li class="sidebar-section isLoggedIn">
+            <a href="./logout">Log Out </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>

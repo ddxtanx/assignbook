@@ -1,0 +1,18 @@
+Question table
+    userWhoAsked - which user asked the question?
+    displayedName - Anonymous if anonymous else userWhoAsked 
+    question - what question do they have?
+    dateAsked - day they asked
+    questionId - questionId so the answer can refer to the question
+    className - className where user submitted
+    classTeacher - classTeacher where submitted
+    classPeriod - classPeriod where submitted
+Answer table-
+    userWhoAnswered - which user answered the question
+    displayedName - Anonymous if anonymous else userWhoAsked 
+    answer - answer text
+    dateAnswered - date answered
+    forQuestionId - refers to the questionId of the question, so it can be matched to question
+    className - className where user submitted
+    classTeacher - classTeacher where submitted
+    classPeriod - classPeriod where submitted
