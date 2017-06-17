@@ -108,7 +108,7 @@ function forgot(req, res){
           from: '"Easy Assignbook Password Assistance" <gcc@ameritech.net>',
           to: email,
           subject: "Password Reset",
-          text:`We have recently received a request to reset the password associated with this email. If you did not request a password change, please ignore this email. If you have requested password assistance, please visit http://cfxhx.hopto.org/change?id=${siteId} Thank you, and have a wonderful day!`
+          text:`We have recently received a request to reset the password associated with this email. If you did not request a password change, please ignore this email. If you have requested password assistance, please visit http://assignbook.herokuapp.com/change?id=${siteId} Thank you, and have a wonderful day!`
         }
         transporter.sendMail(mailOptions, function(err, info){
           if (err) throw err;
