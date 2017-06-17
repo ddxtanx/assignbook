@@ -9,7 +9,7 @@ server.set('views', './public');
 server.use(bodyParser(), express.static("./public"), sessions({
   cookieName: "session",
   secret: process.env.SESSION_SECRET,
-  duration: 30 * 60 * 1000,
+  duration: 60 * 60 * 1000,
   activeDuration: 30 * 60 * 1000
 }));
 function checkIn(req, res, callback){
