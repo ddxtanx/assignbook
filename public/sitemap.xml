@@ -1,39 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-<url>
-  <loc>http://99.63.177.245/classHomework/</loc>
-  <changefreq>daily</changefreq>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>http://99.63.177.245/classHomework/web/login.php</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>http://99.63.177.245/classHomework/web/register.php</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>http://99.63.177.245/classHomework/web/classes.php</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>http://99.63.177.245/classHomework/web/myClasses.php</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>http://99.63.177.245/classHomework/web/../</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://assignbook.herokuapp.com/</loc>
+  </url>
+  <url>
+    <loc>https://assignbook.herokuapp.com/login</loc>
+  </url>
+  <url>
+    <loc>https://assignbook.herokuapp.com/register</loc>
+  </url>
+  <url>
+    <loc>https://assignbook.herokuapp.com/forgot</loc>
+  </url>
+  <url>
+    <loc>https://assignbook.herokuapp.com/myClasses</loc>
+  </url>
+  <url>
+    <loc>https://assignbook.herokuapp.com/viewClass</loc>
+  </url>
+  <url>
+    <loc>https://assignbook.herokuapp.com/classes</loc>
+  </url>
+  <url>
+    <loc>https://assignbook.herokuapp.com/change</loc>
+  </url>
 </urlset>
