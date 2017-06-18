@@ -115,6 +115,8 @@ function forgot(req, res){
           res.end();
         })
       });
+    } else{
+      res.end();
     }
   })
 }
