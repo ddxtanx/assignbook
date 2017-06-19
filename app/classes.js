@@ -5,7 +5,8 @@ ClassHomework = require("./models/ClassHomework.js"),
 ClassNotes = require("./models/ClassNotes.js"),
 Questions = require("./models/Questions.js"),
 UserHomework = require("./models/UserHomework.js"),
-u = require("underscore");
+u = require("underscore"),
+async = require("async");
 function logData(req){
   if(req.session!==undefined){
     return {userName: req.session.name, email: req.session.email, loggedin: req.session.active, id:req.session.id};
@@ -65,19 +66,26 @@ function getData(classData, req, res){
     classPeriod: classData.period,
     classTeacher: classData.teacher
   }
-  ClassHomework.find(classQuery, {_id: false}, {sort: 'dueDate'}, function(err, homework){
-    if(err) throw err;
-    classData.homeworkArray = homework;
-    ClassNotes.find(classQuery, {_id: false}, {sort: 'date'}, function(notesErr, notes){
-      if(notesErr) throw notesErr;
-      classData.notesArray = notes;
-      Questions.find(classQuery, {_id: false}, function(qErr, questions){
-        if(qErr) throw qErr;
-        classData.questionsArray = questions;
-        res.render("twig/viewClass.twig", Object.assign({}, logData(req), classData));
-      })
+async.parallel({
+  homeworkArray: function(cb){
+    ClassHomework.find(classQuery, {_id: false}, {sort: 'dueDate'}, function(err, homework){
+      cb(err, homework)
     })
-  })
+  },
+  notesArray: function(cb){
+     ClassNotes.find(classQuery, {_id: false}, {sort: 'date'}, function(err, notes){
+       cb(err, notes)
+     })
+   },
+  questionsArray: function(cb){
+    Questions.find(classQuery, {_id: false}, function(err, questions){
+      cb(err, questions)
+    })
+  }
+}, function(err, results){
+  if(err) throw err;
+  res.render("twig/viewClass.twig", Object.assign({}, logData(req), Object.assign({}, results, classData)));
+})
 }
 function toggleEnroll(req, res){
   var userId = req.session.id,

@@ -156,7 +156,7 @@ if(cluster.isMaster){
     });
   });
   server.get("/viewClass", function(req, res){
-    req.redirect("/classes")
+    res.redirect("/classes")
   });
   server.get("/forgot", function(req, res){
     res.render("twig/forgot.twig", logData(req));
