@@ -5,7 +5,8 @@ account = require("../app/account.js"),
 classes = require("../app/classes.js"),
 myPage = require("../app/myPage.js"),
 minify = require("../app/min.js"),
-compression = require("compression");
+compression = require("compression"),
+pagespeed = require("pagespeed");
 var compOptions = {
   level: 9,
   filter: shouldCompress
@@ -26,7 +27,7 @@ server.use(bodyParser(), express.static("./public"), sessions({
   secret: process.env.SESSION_SECRET,
   duration: 60 * 60 * 1000,
   activeDuration: 30 * 60 * 1000
-}), compression(compOptions));
+}), compression(compOptions), pagespeed.middleware({debug:true}));
 function checkIn(req, res, callback){
   if(!req.session.active){
     console.log("Catching attempted visit without login");
