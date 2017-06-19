@@ -15,7 +15,11 @@ function jsMinify(files, res){
   var fileContents = "";
   async.eachSeries(files, function(filename, callback){
     fs.readFile("./public/js/"+filename, function(err, content){
-      if(err) throw err;
+      if(err){
+        console.log(err);
+        res.end();
+        return;
+      }
       fileContents+=content;
       callback(err)
     });
@@ -29,7 +33,11 @@ function cssMinify(files, res){
   var fileContents = "";
   async.eachSeries(files, function(filename, callback){
     fs.readFile("./public/css/"+filename, function(err, content){
-      if(err) throw err;
+      if(err){
+        console.log(err);
+        res.end();
+        return;
+      }
       fileContents+=content;
       callback(err);
     });
