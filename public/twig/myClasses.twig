@@ -15,6 +15,11 @@
   var remindersArray = [{{remindersArray}}];
   //Creates homeworkArray and remindersArray for myClasses.js to use
   </script>
+  <style>
+    .btn{
+      cursor: pointer;
+    }
+  </style>
   <script>
   (function(i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
@@ -114,7 +119,7 @@
         <br/>
         <textarea id="reminder" placeholder="Reminder Here"></textarea>
         <br/>
-        <button type="button" class="btn btn-success" name="submitReminder" ontouchstart="addreminder()">Submit</input>
+        <button type="button" class="btn btn-success" name="submitReminder" onclick="addreminder()">Submit</input>
         <br/>
       </div>
       <button class="btn btn-info" id="cancelReminder">Cancel</button>

@@ -34,6 +34,11 @@
   })
   //These add arrays of homework, notes, and answers so viewclass.js can manipulate them.
   </script>
+  <style>
+    .btn{
+      cursor: pointer;
+    }
+  </style>
   <script>
   (function(i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
@@ -80,11 +85,11 @@
     <div id="enrollForm">
       {% if not hasEnrolled %}
       <div id="enroll">
-        <button type="button" ontouchstart="enroll('{{name}}', {{period}}, '{{teacher}}')" class="btn btn-info">Enroll</button>
+        <button type="button" onclick="enroll('{{name}}', {{period}}, '{{teacher}}')" class="btn btn-info">Enroll</button>
       </form>
       {% else %}
       <div id="unenroll">
-        <button type="button" ontouchstart="enroll('{{name}}', {{period}}, '{{teacher}}')" class="btn btn-warning">Unenroll</button>
+        <button type="button" onclick="enroll('{{name}}', {{period}}, '{{teacher}}')" class="btn btn-warning">Unenroll</button>
       </form>
       {% endif %}
     </div>
@@ -109,7 +114,7 @@
           <input type="date" name="duedate" id="homeworkDate"></input>
           <br/>
           <br/>
-          <button type="button" class="btn btn-success" ontouchstart="addHomework()">Submit</button>
+          <button type="button" class="btn btn-success" onclick="addHomework()">Submit</button>
         </form>
         <button id="cancel" class="btn btn-info"> Cancel </button>
       </div>
@@ -121,7 +126,7 @@
         {% for homework in homeworkArray %}
         <div class='homeworkClass homework{{loop.index}}'>
           {% if id == homework.userIDWhoAdded %}
-          <button type='button' class='close' aria-label='Close' ontouchstart='deleteHomework(["{{homework.assignmentName}}", "{{homework.dueDate}}", "{{homework.description}}", {{loop.index}}]);'>
+          <button type='button' class='close' aria-label='Close' onclick='deleteHomework(["{{homework.assignmentName}}", "{{homework.dueDate}}", "{{homework.description}}", {{loop.index}}]);'>
             <span>&times;</span>
           </button>
           {% endif %}
@@ -144,7 +149,7 @@
               <h3> Type Your Notes Here: </h3>
               <textarea form="addNotesF" id="notesText" placeholder="Add notes here"></textarea>
               <br/>
-              <button type="button" class="btn btn-success" ontouchstart="addNotes()">Submit</button>
+              <button type="button" class="btn btn-success" onclick="addNotes()">Submit</button>
             </div>
             <button id="cancelNotes" class="btn btn-info">Cancel</button>
           </div>
@@ -159,7 +164,7 @@
           {% for note in notesArray %}
           <div class='notesClass notes{{loop.index}}'>
               {% if id == note.userId %}
-              <!--<button type='button' class='close' aria-label='Close' ontouchstart='deleteNote("{{note.note}}", "{{note.date}}", {{loop.index}});'>
+              <!--<button type='button' class='close' aria-label='Close' onclick='deleteNote("{{note.note}}", "{{note.date}}", {{loop.index}});'>
                 <span>&times;</span>
               </button> -->
               {% endif %}
@@ -181,7 +186,7 @@
               <label for="anonymous">Do you want your question to be anonymous?</label>
               <input type="checkbox" id="anonymous"></input>
               <br/>
-              <button type="button" name="questionSubmit" class="btn btn-success" ontouchstart="addQuestion()">Add Question</button>
+              <button type="button" name="questionSubmit" class="btn btn-success" onclick="addQuestion()">Add Question</button>
             </div>
             <button id="cancelQButton" class="btn btn-info">Cancel</button>
           </div>
@@ -201,7 +206,7 @@
                   <input type='checkbox' id="anonCheckbox{{loop.index}}"></input>
                   <div class='input-group'>
                     <textarea id='answer{{loop.index}}' placeholder='Put your answer here!'></textarea>
-                    <span class='input-group-btn'><button type='button' class='btn btn-success answerSubmit' ontouchstart="addAnswer('{{question.questionId}}',{{loop.index}})">Add Answer</input></span>
+                    <span class='input-group-btn'><button type='button' class='btn btn-success answerSubmit' onclick="addAnswer('{{question.questionId}}',{{loop.index}})">Add Answer</input></span>
                   </div>
                 </div>
                 <div id='answersFor{{question.questionId}}'>
