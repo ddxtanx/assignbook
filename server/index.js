@@ -1,11 +1,13 @@
 var cluster = require("cluster");
 if(cluster.isMaster){
   var cpuCount = require('os').cpus().length;
-
-   // Create a worker for each CPU
    for (var i = 0; i < cpuCount; i += 1) {
        cluster.fork();
    }
+   cluster.on('exit', function (worker) {
+      console.log('Worker %d died :(', worker.id);
+      cluster.fork();
+  });
 } else{
   var express = require("express"),
   bodyParser = require("body-parser"),
