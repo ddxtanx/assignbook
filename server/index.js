@@ -1,3 +1,4 @@
+var opbeat = require('opbeat').start();
 var cluster = require("cluster");
 if(cluster.isMaster){
   var cpuCount = require('os').cpus().length;
@@ -39,7 +40,7 @@ if(cluster.isMaster){
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(compOptions), pagespeed.middleware({debug:true}));
+  }), compression(compOptions), pagespeed.middleware({debug:true}), opbeat.middleware.express());
   function checkIn(req, res, callback){
     if(!req.session.active){
       console.log("Catching attempted visit without login");
