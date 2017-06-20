@@ -19,7 +19,8 @@ if(cluster.isMaster){
   minify = require("../app/min.js"),
   compression = require("compression"),
   pagespeed = require("pagespeed"),
-  path=require("path");
+  path=require("path"),
+  helmet=require("helmet");
   var compOptions = {
     level: 9,
     filter: shouldCompress
@@ -40,7 +41,7 @@ if(cluster.isMaster){
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(compOptions), pagespeed.middleware({debug:true}), opbeat.middleware.express());
+  }), compression(compOptions), pagespeed.middleware({debug:true}), opbeat.middleware.express(), helmet());
   function checkIn(req, res, callback){
     if(!req.session.active){
       console.log("Catching attempted visit without login");
