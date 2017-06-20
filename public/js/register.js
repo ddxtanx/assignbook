@@ -9,7 +9,7 @@ $(document).ready(function() {
         $("#error").show();
     }
     if (error == "noError") {
-        $("#error").text("You are registered! Now go join some classes!");
+        $("#error").text("You are registered! Now go login!");
         $("#error").removeClass("alert-danger");
         $("#error").addClass("alert-success");
         $("#error").show();

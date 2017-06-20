@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $(".notLoggedIn").remove();
+    $("#hello").hide();
     $("#addFormDiv").hide();
     $("#warning").hide();
     //Hiding sections that will be revealed if needed
