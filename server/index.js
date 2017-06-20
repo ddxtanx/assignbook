@@ -20,7 +20,8 @@ if(cluster.isMaster){
   compression = require("compression"),
   pagespeed = require("pagespeed"),
   path=require("path"),
-  helmet=require("helmet");
+  helmet=require("helmet"),
+  expressEnforcesSsl = require("express-enforces-ssl");
   var compOptions = {
     level: 9,
     filter: shouldCompress
@@ -36,12 +37,13 @@ if(cluster.isMaster){
   }
   var server = express();
   server.set('views', './public');
+  server.enable('trust proxy');
   server.use(bodyParser(), express.static("./public", { maxAge: 86400000 }), sessions({
     cookieName: "session",
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(compOptions), pagespeed.middleware({debug:true}), opbeat.middleware.express(), helmet());
+  }), compression(compOptions), pagespeed.middleware({debug:true}), opbeat.middleware.express(), helmet(), expressEnforcesSsl());
   function checkIn(req, res, callback){
     if(!req.session.active){
       console.log("Catching attempted visit without login");
