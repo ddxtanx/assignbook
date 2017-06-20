@@ -66,26 +66,26 @@ function getData(classData, req, res){
     classPeriod: classData.period,
     classTeacher: classData.teacher
   }
-async.parallel({
-  homeworkArray: function(cb){
-    ClassHomework.find(classQuery, {_id: false}, {sort: 'dueDate'}, function(err, homework){
-      cb(err, homework)
-    })
-  },
-  notesArray: function(cb){
-     ClassNotes.find(classQuery, {_id: false}, {sort: 'date'}, function(err, notes){
-       cb(err, notes)
-     })
-   },
-  questionsArray: function(cb){
-    Questions.find(classQuery, {_id: false}, function(err, questions){
-      cb(err, questions)
-    })
-  }
-}, function(err, results){
-  if(err) throw err;
-  res.render("twig/viewClass.twig", Object.assign({}, logData(req), Object.assign({}, results, classData)));
-})
+  async.parallel({
+    homeworkArray: function(cb){
+      ClassHomework.find(classQuery, {_id: false}, {sort: 'dueDate'}, function(err, homework){
+        cb(err, homework)
+      })
+    },
+    notesArray: function(cb){
+      ClassNotes.find(classQuery, {_id: false}, {sort: 'date'}, function(err, notes){
+        cb(err, notes)
+      })
+    },
+    questionsArray: function(cb){
+      Questions.find(classQuery, {_id: false}, function(err, questions){
+        cb(err, questions)
+      })
+    }
+  }, function(err, results){
+    if(err) throw err;
+    res.render("twig/viewClass.twig", Object.assign({}, logData(req), Object.assign({}, results, classData)));
+  })
 }
 function toggleEnroll(req, res){
   var userId = req.session.id,
@@ -108,16 +108,20 @@ function toggleEnroll(req, res){
         classPeriod: req.body.period,
         classTeacher: req.body.teacher
       }
-      ClassStudents.remove({
-        studentName: userName,
-        email: email,
-        className: req.body.name,
-        classPeriod: req.body.period,
-        classTeacher: req.body.teacher
-      }, function(err, response){
-        if(err) throw err;
-        UserClasses.remove(classQuery, function(err, response2){
-          if(err) throw err;
+      async.parallel([
+        function(callback){
+            ClassStudents.remove({
+            studentName: userName,
+            email: email,
+            className: req.body.name,
+            classPeriod: req.body.period,
+            classTeacher: req.body.teacher
+          }, function(err, data){callback(err, data)});
+        },
+        function(callback){
+          UserClasses.remove(classQuery, function(err, response2){callback(err, response2)})
+        },
+        function(callback){
           Class.update({
             name: req.body.name,
             period: req.body.period,
@@ -126,13 +130,25 @@ function toggleEnroll(req, res){
             "$inc": {
               "studentsEnrolled": -1
             }
-          }, function(err){
-            if(err) throw err;
-            res.writeHead(200, {'Content-Type': 'null'});
-            res.end();
-          });
-        });
-      });
+          }, function(err, resp){
+            callback(err, resp)
+          }
+        )},
+        function(callback){
+          var homeworkObj = {
+            userID: userId,
+            className: req.body.name
+          }
+          console.log(homeworkObj);
+          UserHomework.remove(homeworkObj, function(err, resp){
+            callback(err, resp)
+          })
+        }
+      ], function(err, responses){
+        if(err) throw err;
+      })
+      res.writeHead(200, {'Content-Type': 'null'});
+      res.end();
     } else{
       console.log("enrolling");
       //User is not enrolled, enrolling
@@ -150,27 +166,59 @@ function toggleEnroll(req, res){
         classTeacher: req.body.teacher,
         userID: userId
       });
-      NewClassStudent.save(function(err, response){
-        if(err) throw err;
-        NewUserClass.save(function(err, response){
-          if(err) throw err;
-          var updateQuery = {
-            name: req.body.name,
-            period: req.body.period,
-            teacherName: req.body.teacher
-          };
-          console.log(updateQuery);
+      var updateQuery = {
+        name: req.body.name,
+        period: req.body.period,
+        teacherName: req.body.teacher
+      };
+      async.parallel([
+        function(callback){
+          NewClassStudent.save(function(err, resp){
+            callback(err, resp)
+          });
+        },
+        function(callback){
+          NewUserClass.save(function(err, resp){
+            callback(err, resp)
+          });
+        },
+        function(callback){
           Class.update(updateQuery, {
             "$inc": {
               "studentsEnrolled": 1
             }
-          }, function(err){
-            if(err) throw err;
-            res.writeHead(200, {'Content-Type': 'null'});
-            res.end();
-          });
-        })
-      })
+          }, function(err, resp){
+            callback(err, resp);
+          })
+        },
+        function(callback){
+          ClassHomework.find({
+            className: req.body.name,
+            classPeriod: req.body.period,
+            classTeacher: req.body.teacher,
+          }, function(err, homework){
+            async.each(homework, function(home, cb){
+              var NewUserHomework = new UserHomework({
+                assignmentName: home.assignmentName,
+                dueDate: home.dueDate,
+                description: home.description,
+                className: req.body.name,
+                completed: false,
+                userID: userId
+              });
+              NewUserHomework.save(function(err, resp){
+                cb(err, resp)
+              })
+            }, function(err, resp){
+              callback(err, resp)
+            })
+          })
+        }
+      ], function(err, results){
+        if(err) throw err;
+        res.writeHead(200, {'Content-Type': 'null'});
+        res.end();
+      });
     }
   });
 }
@@ -236,7 +284,7 @@ function addHomework(req, res){
   }
   var query = Object.assign({}, homeworkData, classData);
   var userID = req.session.id;
-  UserClasses.find(classData, {userID: true}, function(err, ids){
+  UserClasses.find(classData, function(err, ids){
     if(ids==undefined){
       res.end();
       return;
@@ -244,13 +292,15 @@ function addHomework(req, res){
     var classHomeworkObj = Object.assign({}, query, {userIDWhoAdded: userID});
     var NewClassHomework = new ClassHomework(classHomeworkObj);
     NewClassHomework.save();
-    ids.forEach(function(id){
+    async.each(ids, function(id, callback){
       var NewUserHomework = new UserHomework(Object.assign({}, homeworkData, {
         className: req.body.name,
         completed: false,
         userID: id.userID
       }));
       NewUserHomework.save();
+    }, function(err){
+      if(err) throw err;
     });
     res.end();
   });
