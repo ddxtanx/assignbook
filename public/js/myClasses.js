@@ -1,4 +1,10 @@
 //This file handles everything on the myClasses page
+Date.dateDiff = function(fromdate, todate) {
+  var diff = todate - fromdate;
+  var divideBy = 86400000
+
+  return Math.floor( diff/divideBy);
+}
 function ajaxPost(ajaxUrl, ajaxData, callback) {
     $.ajax({
         method: "POST",
@@ -161,6 +167,23 @@ $(document).ready(function() {
                 $(".class" + (x+1)).show("fast");
             }
         }
+    });
+    $(".duedate").each(function(i, element){
+      console.log("running")
+      var dueDate = element.attributes[1].value;
+      console.log(dueDate);
+      var parts = dueDate.split("-");
+      dueDate = new Date(parts[0], parts[1]-1, parts[2]);
+      console.log(dueDate);
+      var today = new Date();
+      var daysDiff = Date.dateDiff(today, dueDate)+1;
+      console.log(daysDiff);
+      var adj = (daysDiff<0)?"ago":"away";
+      daysDiff = Math.abs(daysDiff);
+      var prefix = (daysDiff==1)?"day":"days";
+      var sentence = (daysDiff==0)?" Today":" "+daysDiff+" "+prefix+" "+adj;
+      console.log(sentence);
+      element.innerText=element.innerText+sentence;
     });
 });
 function addreminder(){

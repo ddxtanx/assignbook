@@ -25,6 +25,7 @@ function jsMinify(files, res){
     });
   }, function(err){
     var result = uglifyJs.minify(fileContents);
+    console.log(result.error);
     res.writeHead(200, {'Content-Type': 'text/javascript'});
     res.end(result.code);
   });
