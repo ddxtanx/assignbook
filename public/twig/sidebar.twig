@@ -40,6 +40,11 @@
         <li class="sidebar-section isLoggedIn" id="myClasses">
             <a href="./myClasses"> My Classes & Homework</a>
         </li>
+        {% if random(4)==0 %}
+        <li class="sidebar-section isLoggedIn">
+          <a href="/survey"> Short Survey </a>
+        </li>
+        {% endif %}
         <li class="sidebar-section isLoggedIn">
             <a href="./logout">Log Out </a>
         </li>

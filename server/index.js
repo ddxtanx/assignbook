@@ -17,7 +17,8 @@ if(cluster.isMaster){
   myPage = require("../app/myPage.js"),
   minify = require("../app/min.js"),
   compression = require("compression"),
-  pagespeed = require("pagespeed");
+  pagespeed = require("pagespeed"),
+  path=require("path");
   var compOptions = {
     level: 9,
     filter: shouldCompress
@@ -175,6 +176,11 @@ if(cluster.isMaster){
   });
   server.get("/public/*", function(req, res){
     res.end();
+  });
+  server.get("/survey", function(req, res){
+    checkIn(req, res, function(){
+      res.render('twig/survey.twig');
+    })
   })
   var PORT = process.env.PORT;
   console.log(`SERVER LISTENING ON PORT ${PORT}`);
