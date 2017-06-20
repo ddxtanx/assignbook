@@ -1,7 +1,8 @@
 var UserClasses = require("./models/UserClasses.js"),
 UserHomework = require("./models/UserHomework.js"),
 Reminders = require("./models/Reminders.js"),
-u = require("underscore");
+u = require("underscore"),
+async = require("async");
 function logData(req){
   if(req.session!==undefined){
     return {userName: req.session.name, email: req.session.email, loggedin: req.session.active, id:req.session.id};
@@ -11,15 +12,26 @@ function logData(req){
 }
 function pageData(req, res){
   var userID = req.session.id;
-  UserClasses.find({userID: userID}, {_id: false}, {sort: 'classPeriod'}, function(err, classes){
-    if(err) throw err;
-    UserHomework.find({userID: userID}, {_id: false}, {sort: 'dueDate'}, function(err, homework){
-      if(err) throw err;
+  async.parallel({
+    classes: function(cb){
+      UserClasses.find({userID: userID}, {_id: false}, {sort: 'classPeriod'}, function(err, classes){
+        cb(err, classes)
+      });
+    },
+    homework: function(cb){
+        UserHomework.find({userID: userID}, {_id: false}, {sort: 'dueDate'}, function(err, homework){
+          cb(err, homework);
+        });
+    },
+    reminders: function(cb){
       Reminders.find({userID: userID}, {_id: false}, function(err, reminders){
-        res.render("twig/myClasses.twig", Object.assign({}, {classesArray: classes, homeworkArray: homework, remindersArray: reminders}, logData(req)));
-      })
-    })
-  })
+        cb(err, reminders);
+      });
+    }
+  }, function(err, results){
+    if(err) throw err;
+    res.render("twig/myClasses.twig", Object.assign({}, {classesArray: results.classes, homeworkArray: results.homework, remindersArray: results.reminders}, logData(req)));
+  });
 }
 function addReminder(req, res){
   var reminderText = u.escape(req.body.reminder);
