@@ -4,7 +4,7 @@ ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:ms:20170412':
-    - bcrypt > node-pre-gyp > tar-pack > debug > ms:
-        patched: '2017-06-20T23:06:42.824Z'
     - compression > debug > ms:
-        patched: '2017-06-20T23:06:42.824Z'
+        patched: '2017-06-20T23:23:15.071Z'
+    - bcrypt > node-pre-gyp > tar-pack > debug > ms:
+        patched: '2017-06-20T23:23:15.071Z'
