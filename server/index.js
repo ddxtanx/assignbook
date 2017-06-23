@@ -17,23 +17,9 @@ if(cluster.isMaster){
   classes = require("../app/classes.js"),
   myPage = require("../app/myPage.js"),
   compression = require("compression"),
-  pagespeed = require("pagespeed"),
   path=require("path"),
   helmet=require("helmet"),
   expressEnforcesSsl = require("express-enforces-ssl");
-  var compOptions = {
-    level: 9,
-    filter: shouldCompress
-  }
-  function shouldCompress (req, res) {
-    if (req.headers['x-no-compression']) {
-      // don't compress responses with this request header
-      return false
-    }
-
-    // fallback to standard filter function
-    return compression.filter(req, res)
-  }
   var server = express();
   server.set('views', './public');
   server.enable('trust proxy');
@@ -42,7 +28,7 @@ if(cluster.isMaster){
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(compOptions), pagespeed.middleware({debug:true}), opbeat.middleware.express(), helmet(), expressEnforcesSsl());
+  }), compression(), opbeat.middleware.express(), helmet(), expressEnforcesSsl());
   function checkIn(req, res, callback){
     if(!req.session.active){
       console.log("Catching attempted visit without login");
