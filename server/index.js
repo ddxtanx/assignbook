@@ -16,7 +16,6 @@ if(cluster.isMaster){
   account = require("../app/account.js"),
   classes = require("../app/classes.js"),
   myPage = require("../app/myPage.js"),
-  minify = require("../app/min.js"),
   compression = require("compression"),
   pagespeed = require("pagespeed"),
   path=require("path"),
@@ -175,9 +174,6 @@ if(cluster.isMaster){
   server.post("/change", function(req, res){
     account.change(req, res);
   })
-  server.get("/min", function(req, res){
-    minify.minify(req, res);
-  });
   server.get("/public/*", function(req, res){
     res.end();
   });
