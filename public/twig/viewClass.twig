@@ -145,12 +145,12 @@
           </div>
           {% if hasEnrolled %}
           <div id="addNotesForm">
-            <div id="addNotesF">
+            <form id="addNotesF">
               <h3> Type Your Notes Here: </h3>
               <textarea form="addNotesF" id="notesText" placeholder="Add notes here"></textarea>
               <br/>
               <button type="button" class="btn btn-success" onclick="addNotes()">Submit</button>
-            </div>
+            </form>
             <button id="cancelNotes" class="btn btn-info">Cancel</button>
           </div>
           {% endif %}
@@ -179,7 +179,7 @@
           <button id="addQButton" class="btn btn-info"> Add A Question </button>
           {% if hasEnrolled %}
           <div id="addQuestion">
-            <div id="addQ">
+            <form id="addQ">
               <label for="question">What is your question?</label>
               <input type="text" id="question"></input>
               <br/>
@@ -187,7 +187,7 @@
               <input type="checkbox" id="anonymous"></input>
               <br/>
               <button type="button" name="questionSubmit" class="btn btn-success" onclick="addQuestion()">Add Question</button>
-            </div>
+            </form>
             <button id="cancelQButton" class="btn btn-info">Cancel</button>
           </div>
           {% endif %}
@@ -201,14 +201,14 @@
               <h3> On: {{question.dateAsked}}</h3>
               <h4>{{question.question}}</h4>
               <div class='answerSection'>
-                <div>
+                <form>
                   <label for='anonCheckbox'>Do you want your answer to be anonymous?</label>
                   <input type='checkbox' id="anonCheckbox{{loop.index}}"></input>
                   <div class='input-group'>
                     <textarea id='answer{{loop.index}}' placeholder='Put your answer here!'></textarea>
                     <span class='input-group-btn'><button type='button' class='btn btn-success answerSubmit' onclick="addAnswer('{{question.questionId}}',{{loop.index}})">Add Answer</input></span>
                   </div>
-                </div>
+                </form>
                 <div id='answersFor{{question.questionId}}'>
                   {% for answer in question.answers %}
                   <div class='answersClass answer{{loop.index}}'>
