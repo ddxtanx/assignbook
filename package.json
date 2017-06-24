@@ -28,8 +28,7 @@
     "secure-random": "^1.1.1",
     "snyk": "^1.35.0",
     "twig": "^1.10.5",
-    "uglify-js": "^3.0.17",
-    "underscore": "^1.8.3"
+    "uglify-js": "^3.0.17"
   },
   "snyk": true
 }
