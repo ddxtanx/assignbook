@@ -1,7 +1,6 @@
 var UserClasses = require("./models/UserClasses.js"),
 UserHomework = require("./models/UserHomework.js"),
 Reminders = require("./models/Reminders.js"),
-u = require("underscore"),
 async = require("async");
 function logData(req){
   if(req.session!==undefined){
@@ -34,7 +33,7 @@ function pageData(req, res){
   });
 }
 function addReminder(req, res){
-  var reminderText = u.escape(req.body.reminder);
+  var reminderText = req.body.reminder;
   var userID = req.session.id;
   var reminderID = Math.random()*Math.pow(10,18);
   var d = new Date();

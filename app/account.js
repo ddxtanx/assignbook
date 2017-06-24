@@ -1,7 +1,6 @@
 var User = require("./models/User");
 var bcrypt = require("bcrypt");
 var random = require("secure-random");
-var u = require("underscore");
 var Reset = require("./models/Reset");
 var nodemailer = require("nodemailer"),
 transporter = nodemailer.createTransport({
@@ -29,8 +28,8 @@ function passHash(password, callback){
   });
 }
 function register(req, res){
-  var name = u.escape(req.body.name),
-  email = u.escape(req.body.email),
+  var name = req.body.name,
+  email = req.body.email,
   pass1 = req.body.password,
   pass2 = req.body.password2
   if(pass1!==pass2){

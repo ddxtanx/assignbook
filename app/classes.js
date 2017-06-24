@@ -5,7 +5,6 @@ ClassHomework = require("./models/ClassHomework.js"),
 ClassNotes = require("./models/ClassNotes.js"),
 Questions = require("./models/Questions.js"),
 UserHomework = require("./models/UserHomework.js"),
-u = require("underscore"),
 async = require("async");
 function logData(req){
   if(req.session!==undefined){
@@ -31,10 +30,10 @@ function getClasses(req, res){
 function addClass(req, res){
   if(!isNaN(req.body.period)){
     var newClass = new Class({
-      name: u.escape(req.body.className),
-      period: u.escape(req.body.period),
+      name: req.body.className,
+      period: req.body.period,
       studentsEnrolled:0,
-      teacherName: u.escape(req.body.teacherName),
+      teacherName: req.body.teacherName,
       userWhoAdded: req.session.id
     });
     newClass.save(function(err, response){
@@ -281,9 +280,9 @@ function deleteHomework(req, res){
 function addHomework(req, res){
   req.body.period = parseInt(req.body.period);
   var homeworkData = {
-    assignmentName: u.escape(req.body.homeworkName),
-    description: u.escape(req.body.description),
-    dueDate: u.escape(req.body.duedate)
+    assignmentName: req.body.homeworkName,
+    description: req.body.description,
+    dueDate: req.body.duedate
   }
   var classData = {
     className: req.body.name,
@@ -314,7 +313,7 @@ function addHomework(req, res){
   });
 }
 function addNotes(req, res){
-  var note = u.escape(req.body.note);
+  var note = req.body.note;
   var classData = {
     className: req.body.name,
     classPeriod: req.body.period,
@@ -333,7 +332,7 @@ function addNotes(req, res){
 }
 function addQuestion(req, res){
   console.log(req.body);
-  var question = u.escape(req.body.question),
+  var question = req.body.question,
   anonymous = req.body.anonymous,
   displayedName = (anonymous)?"Anonymous":req.session.name;
   if(question[question.length-1]!=='?'){
@@ -363,7 +362,7 @@ function addQuestion(req, res){
   })
 }
 function addAnswer(req, res){
-  var answer = u.escape(req.body.answer);
+  var answer = req.body.answer;
   var anon = (req.body.anonymous=='true');
   var displayedName = (anon)?"Anonymous":req.session.name;
   var questionId = req.body.questionId;
