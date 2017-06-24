@@ -19,7 +19,8 @@ if(cluster.isMaster){
   compression = require("compression"),
   path=require("path"),
   helmet=require("helmet"),
-  expressEnforcesSsl = require("express-enforces-ssl");
+  expressEnforcesSsl = require("express-enforces-ssl"),
+  sanatize = require("express-sanitize-escape");
   var server = express();
   server.set('views', './public');
   server.enable('trust proxy');
@@ -28,7 +29,7 @@ if(cluster.isMaster){
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(), opbeat.middleware.express(), helmet(), expressEnforcesSsl());
+  }), compression(), opbeat.middleware.express(), helmet(), expressEnforcesSsl(), sanatize());
   function checkIn(req, res, callback){
     if(!req.session.active){
       console.log("Catching attempted visit without login");
