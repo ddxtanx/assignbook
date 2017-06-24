@@ -29,17 +29,21 @@ function getClasses(req, res){
   })
 }
 function addClass(req, res){
-  var newClass = new Class({
-    name: u.escape(req.body.className),
-    period: u.escape(req.body.period),
-    studentsEnrolled:0,
-    teacherName: u.escape(req.body.teacherName),
-    userWhoAdded: req.session.id
-  });
-  newClass.save(function(err, response){
-    if(err) throw err;
-    getClasses(req, res);
-  })
+  if(!isNaN(req.body.period)){
+    var newClass = new Class({
+      name: u.escape(req.body.className),
+      period: u.escape(req.body.period),
+      studentsEnrolled:0,
+      teacherName: u.escape(req.body.teacherName),
+      userWhoAdded: req.session.id
+    });
+    newClass.save(function(err, response){
+      if(err) throw err;
+      getClasses(req, res);
+    })
+  } else{
+    getClasses(req,res);
+  }
 }
 function getClassData(req, res){
   var name = req.body.name,
