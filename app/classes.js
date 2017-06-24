@@ -50,19 +50,23 @@ function getClassData(req, res){
   period = req.body.period,
   teacher = req.body.teacher,
   userId = req.session.id;
-  UserClasses.findOne({
-    className: name,
-    classPeriod: period,
-    classTeacher: teacher,
-    userID: userId
-  }, {}, function(err, foundClass){
-    if(err) throw err;
-    if(foundClass!==null){
-      getData({name: name, period: period, teacher: teacher, hasEnrolled: true}, req, res);
-    } else{
-      getData({name: name, period: period, teacher: teacher, hasEnrolled: false}, req, res);
-    }
-  })
+  if(!isNaN(req.body.period)){
+    UserClasses.findOne({
+      className: name,
+      classPeriod: period,
+      classTeacher: teacher,
+      userID: userId
+    }, {}, function(err, foundClass){
+      if(err) throw err;
+      if(foundClass!==null){
+        getData({name: name, period: period, teacher: teacher, hasEnrolled: true}, req, res);
+      } else{
+        getData({name: name, period: period, teacher: teacher, hasEnrolled: false}, req, res);
+      }
+    })
+  } else{
+    res.redirect("/classes");
+  }
 }
 function getData(classData, req, res){
   var classQuery = {
