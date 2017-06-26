@@ -80,7 +80,7 @@
         <h1 class='className'>{{class.name}}</h1>
         <form action='./viewClass' method='POST'>
           {% if class.userWhoAdded == id and class.studentsEnrolled <= 1 %}
-          <button type="button" class="viewClass close delClass" classdata="{{class}}" >&times;</button>
+          <button type="button" class="viewClass close delClass" name="{{class.name}}" period={{class.period}} teacherName="{{class.teacherName}}" >&times;</button>
           {% endif %}
           <button type='submit' class='btn-link viewClass'>View Class</button>
           <input type='hidden' name='name' value='{{class.name}}'></input>

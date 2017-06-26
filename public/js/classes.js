@@ -44,13 +44,22 @@ $(document).ready(function() {
         }
     });
     $(".delClass").click(function(){
-      var classData = $(this).attr("classdata");
       var element = $(this);
+      var name = element.attr("name");
+      var period = element.attr("period")
+      var teacherName = element.attr("teacherName");
+      console.log({
+        name: name,
+        period: period,
+        teacherName: teacherName
+      })
       $.ajax({
         method: "POST",
         url: "deleteClass",
         data: {
-          Class: classData
+          name: name,
+          period: period,
+          teacherName: teacherName
         },
         success: function(data){
           element.parent().parent().hide("fast", function(){

@@ -29,7 +29,7 @@ if(cluster.isMaster){
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(), opbeat.middleware.express(), helmet(), expressEnforcesSsl());
+  }), compression(), opbeat.middleware.express(), helmet()/*,expressEnforcesSsl()*/);
   function checkIn(req, res, callback){
     if(!req.session.active){
       console.log("Catching attempted visit without login");

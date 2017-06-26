@@ -396,10 +396,9 @@ function addAnswer(req, res){
   });
 }
 function deleteClass(req, res){
-  var c = req.body.Class;
-  var name = c.name;
-  var period = c.period;
-  var teacherName = c.teacherName;
+  var name = req.body.name;
+  var period = req.body.period;
+  var teacherName = req.body.teacherName;
   var userId = req.session.id;
   var delData = {
     className: name,
@@ -412,12 +411,17 @@ function deleteClass(req, res){
     teacherName: teacherName
   }, function(err, delClass){
     if(err) throw err;
-    if(delClass!==undefined){
+    if(delClass!==null){
       var classUserId = delClass.userWhoAdded;
       if(userId==classUserId&&(delClass.studentsEnrolled<=1)){
         async.parallel([
           function(cb){
-            Class.remove(c, function(err, resp){
+            Class.remove({
+              name: name,
+              period: period,
+              teacherName: teacherName,
+              userWhoAdded: userId
+            }, function(err, resp){
               cb(err, resp);
             })
           },
@@ -453,13 +457,13 @@ function deleteClass(req, res){
           }
         ], function(err, resps){
           if(err) throw err;
-          res.end();
+          res.end("good");
         })
       } else{
-        res.end();
+        res.end("error");
       }
     } else{
-      res.end();
+      res.end("error");
     }
   })
 }
