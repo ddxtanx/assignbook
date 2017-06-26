@@ -50,17 +50,27 @@ function getClassData(req, res){
   teacher = req.body.teacher,
   userId = req.session.id;
   if(!isNaN(req.body.period)){
-    UserClasses.findOne({
+    Classes.findOne({
       className: name,
       classPeriod: period,
-      classTeacher: teacher,
-      userID: userId
-    }, {}, function(err, foundClass){
-      if(err) throw err;
-      if(foundClass!==null){
-        getData({name: name, period: period, teacher: teacher, hasEnrolled: true}, req, res);
+      classTeacher: teacher
+    }, function(err, Class){
+      if(Class!==null){
+        UserClasses.findOne({
+          className: name,
+          classPeriod: period,
+          classTeacher: teacher,
+          userID: userId
+        }, {}, function(err, foundClass){
+          if(err) throw err;
+          if(foundClass!==null){
+            getData({name: name, period: period, teacher: teacher, hasEnrolled: true}, req, res);
+          } else{
+            getData({name: name, period: period, teacher: teacher, hasEnrolled: false}, req, res);
+          }
+        })
       } else{
-        getData({name: name, period: period, teacher: teacher, hasEnrolled: false}, req, res);
+        res.redirect("/classes");
       }
     })
   } else{
@@ -117,7 +127,7 @@ function toggleEnroll(req, res){
       }
       async.parallel([
         function(callback){
-            ClassStudents.remove({
+          ClassStudents.remove({
             studentName: userName,
             email: email,
             className: req.body.name,
