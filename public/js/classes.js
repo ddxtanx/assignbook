@@ -43,19 +43,23 @@ $(document).ready(function() {
             }
         }
     });
+    $(".delClass").click(function(){
+      var classData = $(this).attr("classData");
+      var element = $(this);
+      $.ajax({
+        method: "POST",
+        url: "deleteClass",
+        data: {
+          Class: classData
+        },
+        success: function(data){
+          element.parent().parent().hide("fast", function(){
+            element.parent().parent().remove();
+          });
+        },
+        error: function(data){
+          alert(JSON.stringify(data));
+        }
+      })
+    })
 });
-function deleteClass(Class){
-  $.ajax({
-    method: "POST",
-    url: "deleteClass",
-    data: {
-      Class: Class
-    },
-    success: function(data){
-      window.location.reload();
-    },
-    error: function(data){
-      alert(JSON.stringify(data));
-    }
-  })
-}
