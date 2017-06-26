@@ -36,9 +36,15 @@ hr {
 #classesDiv {
     height: auto;
 }
-@media all and (max-width: 600px) and (orientation:portrait) 
+@media all and (max-width: 600px) and (orientation:portrait)
 {
     .btn-link{
         font-size:6vw;
     }
+}
+.close{
+    transform: scale(2);
+    margin-right: 1vw;
+    margin-top: 1vh;
+    color: #AC0000;
 }
