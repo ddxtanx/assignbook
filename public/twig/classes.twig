@@ -79,8 +79,8 @@
         <br/>
         <h1 class='className'>{{class.name}}</h1>
         <form action='./viewClass' method='POST'>
-          {{class.userWhoAdded}}
-          {{id}}
+          Class id {{class.userWhoAdded}}
+          Ses id {{id}}
           {% if class.userWhoAdded == id %}
           <button type="button" class="viewClass close" onclick="deleteClass({{class}})"><span class="fa fa-times"></span></button>
           {% endif %}
