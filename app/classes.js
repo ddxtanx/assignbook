@@ -467,6 +467,20 @@ function deleteClass(req, res){
     }
   })
 }
+function deleteNote(req, res){
+  var note  = req.body.note;
+  var userId = req.session.id;
+  ClassNotes.remove({
+    note: note,
+    userId: userId,
+    className: req.body.name,
+    classPeriod: req.body.period,
+    classTeacher: req.body.teacher
+  }, function(err, resp){
+    if(err) throw err;
+    res.end();
+  })
+}
 module.exports = {
   getClasses: getClasses,
   addClass: addClass,
@@ -477,5 +491,6 @@ module.exports = {
   addNotes: addNotes,
   addQuestion: addQuestion,
   addAnswer: addAnswer,
-  deleteClass: deleteClass
+  deleteClass: deleteClass,
+  deleteNote: deleteNote
 }

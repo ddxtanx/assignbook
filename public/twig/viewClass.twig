@@ -164,10 +164,11 @@
           {% for note in notesArray %}
           <div class='notesClass notes{{loop.index}}'>
               {% if id == note.userId %}
-              <!--<button type='button' class='close' aria-label='Close' onclick='deleteNote("{{note.note}}", "{{note.date}}", {{loop.index}});'>
+              <button type='button' class='close delNote' note="{{note.note}}" aria-label='Close'>
                 <span>&times;</span>
-              </button> -->
+              </button>
               {% endif %}
+
               <h3> On: {{note.date}}</h3>
               <h2> {{note.note}}</h2>
           </div>

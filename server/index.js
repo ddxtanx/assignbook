@@ -29,7 +29,10 @@ if(cluster.isMaster){
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(), opbeat.middleware.express(), helmet()/*,expressEnforcesSsl()*/);
+  }), compression(), opbeat.middleware.express(), helmet());
+  if(process.env.env=="prod"){
+    server.use(expressEnforcesSsl());
+  }
   function checkIn(req, res, callback){
     if(!req.session.active){
       console.log("Catching attempted visit without login");
@@ -172,6 +175,11 @@ if(cluster.isMaster){
   server.post("/deleteClass", function(req, res){
     checkIn(req, res, function(){
       classes.deleteClass(req, res);
+    });
+  });
+  server.post("/deleteNote", function(req, res){
+    checkIn(req, res, function(){
+      classes.deleteNote(req, res);
     })
   })
   var PORT = process.env.PORT;

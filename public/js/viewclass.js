@@ -128,6 +128,28 @@ $(document).ready(function() {
         $("#addQButton").show("fast");
     });
     //Cancels the question form
+    $(".delNote").click(function(){
+      var ele = $(this);
+      var note = ele.attr("note");
+      $.ajax({
+        method: "POST",
+        url: "deleteNote",
+        data:{
+          note: note,
+          name: className,
+          period: classPeriod,
+          teacher: classTeacher
+        },
+        success: function(data){
+          ele.parent().hide("fast", function(){
+            ele.parent().remove();
+          })
+        },
+        error: function(data){
+          alert(JSON.stringify(data));
+        }
+      });
+    });
 });
 function deleteHomework(array){
     var hName = array[0];
