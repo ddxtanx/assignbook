@@ -15,7 +15,6 @@ function logData(req){
 }
 function getClasses(req, res){
   Class.find({},{
-    studentsEnrolled: false,
     _id: false
   }, {
     sort: {
@@ -27,7 +26,7 @@ function getClasses(req, res){
   })
 }
 function addClass(req, res){
-  if(!isNaN(req.body.period)&&(req.body.className!=="")&&(req.body.teacherName!=="")){
+  if((!isNaN(req.body.period))&&(req.body.className!=="")&&(req.body.teacherName!=="")){
     var newClass = new Class({
       name: req.body.className,
       period: req.body.period,
@@ -396,6 +395,74 @@ function addAnswer(req, res){
     res.end();
   });
 }
+function deleteClass(req, res){
+  var c = req.body.Class;
+  var name = c.name;
+  var period = c.period;
+  var teacherName = c.teacherName;
+  var userId = req.session.id;
+  var delData = {
+    className: name,
+    classPeriod: period,
+    classTeacher: teacherName
+  };
+  Class.findOne({
+    name: name,
+    period: period,
+    teacherName: teacherName
+  }, function(err, delClass){
+    if(err) throw err;
+    if(delClass!==undefined){
+      var classUserId = delClass.userWhoAdded;
+      if(userId==classUserId&&(delClass.studentsEnrolled<=1)){
+        async.parallel([
+          function(cb){
+            Class.remove(c, function(err, resp){
+              cb(err, resp);
+            })
+          },
+          function(cb){
+            ClassHomework.remove(delData, function(err, resp){
+              cb(err, resp)
+            })
+          },
+          function(cb){
+            ClassNotes.remove(delData, function(err, resp){
+              cb(err, resp);
+            });
+          },
+          function(cb){
+            ClassStudents.remove(delData, function(err, resp){
+              cb(err, resp);
+            });
+          },
+          function(cb){
+            Questions.remove(delData, function(err, resp){
+              cb(err, resp);
+            })
+          },
+          function(cb){
+            UserClasses.remove(delData, function(err, resp){
+              cb(err, resp);
+            });
+          },
+          function(cb){
+            UserHomework.remove({className: name}, function(err, resp){
+              cb(err, resp)
+            })
+          }
+        ], function(err, resps){
+          if(err) throw err;
+          res.end();
+        })
+      } else{
+        res.end();
+      }
+    } else{
+      res.end();
+    }
+  })
+}
 module.exports = {
   getClasses: getClasses,
   addClass: addClass,
@@ -405,5 +472,6 @@ module.exports = {
   addHomework: addHomework,
   addNotes: addNotes,
   addQuestion: addQuestion,
-  addAnswer: addAnswer
+  addAnswer: addAnswer,
+  deleteClass: deleteClass
 }

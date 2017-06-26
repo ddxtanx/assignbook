@@ -79,7 +79,7 @@
         <br/>
         <h1 class='className'>{{class.name}}</h1>
         <form action='./viewClass' method='POST'>
-          {% if class.userWhoAdded == id %}
+          {% if class.userWhoAdded == id and class.studentsEnrolled <= 1 %}
           <button type="button" class="viewClass close" onclick="deleteClass({{class}})">&times;</button>
           {% endif %}
           <button type='submit' class='btn-link viewClass'>View Class</button>

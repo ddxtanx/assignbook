@@ -44,3 +44,18 @@ $(document).ready(function() {
         }
     });
 });
+function deleteClass(Class){
+  $.ajax({
+    method: "POST",
+    url: "deleteClass",
+    data: {
+      Class: Class
+    },
+    success: function(data){
+      window.location.reload();
+    },
+    error: function(data){
+      alert(JSON.stringify(data));
+    }
+  })
+}

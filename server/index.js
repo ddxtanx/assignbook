@@ -167,6 +167,11 @@ if(cluster.isMaster){
   server.get("/survey", function(req, res){
     checkIn(req, res, function(){
       res.render('twig/survey.twig');
+    });
+  });
+  server.post("/deleteHomework", function(req, res){
+    checkIn(req, res, function(){
+      classes.deleteClass(req, res);
     })
   })
   var PORT = process.env.PORT;
