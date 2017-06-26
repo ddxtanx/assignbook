@@ -169,7 +169,7 @@ if(cluster.isMaster){
       res.render('twig/survey.twig');
     });
   });
-  server.post("/deleteHomework", function(req, res){
+  server.post("/deleteClass", function(req, res){
     checkIn(req, res, function(){
       classes.deleteClass(req, res);
     })
