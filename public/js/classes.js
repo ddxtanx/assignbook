@@ -44,7 +44,7 @@ $(document).ready(function() {
         }
     });
     $(".delClass").click(function(){
-      var classData = $(this).attr("classdata");
+      var classData = JSON.parse($(this).attr("classdata"));
       var element = $(this);
       $.ajax({
         method: "POST",
