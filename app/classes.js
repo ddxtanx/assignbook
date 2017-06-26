@@ -16,8 +16,7 @@ function logData(req){
 function getClasses(req, res){
   Class.find({},{
     studentsEnrolled: false,
-    _id: false,
-    userWhoAdded: false
+    _id: false
   }, {
     sort: {
       period: 1
