@@ -51,9 +51,9 @@ function getClassData(req, res){
   userId = req.session.id;
   if(!isNaN(req.body.period)){
     Class.findOne({
-      className: name,
-      classPeriod: period,
-      classTeacher: teacher
+      name: name,
+      period: period,
+      teacherName: teacher
     }, function(err, cl){
       if(cl!==null){
         UserClasses.findOne({
