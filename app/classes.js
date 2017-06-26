@@ -27,7 +27,7 @@ function getClasses(req, res){
   })
 }
 function addClass(req, res){
-  if(!isNaN(req.body.period)){
+  if(!isNaN(req.body.period)&&(req.body.className!=="")&&(req.body.teacherName!=="")){
     var newClass = new Class({
       name: req.body.className,
       period: req.body.period,
