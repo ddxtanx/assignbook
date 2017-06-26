@@ -24,12 +24,12 @@ if(cluster.isMaster){
   var server = express();
   server.set('views', './public');
   server.enable('trust proxy');
-  server.use(bodyParser(), express.static("./public", { maxAge: 86400000 }), sessions({
+  server.use( expressSanitized.middleware(), bodyParser(), express.static("./public", { maxAge: 86400000 }), sessions({
     cookieName: "session",
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(), opbeat.middleware.express(), helmet(), expressEnforcesSsl(), expressSanitized.middleware());
+  }), compression(), opbeat.middleware.express(), helmet(), expressEnforcesSsl());
   function checkIn(req, res, callback){
     if(!req.session.active){
       console.log("Catching attempted visit without login");
