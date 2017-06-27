@@ -2,6 +2,7 @@ var opbeat = require('opbeat').start();
 var cluster = require("cluster");
 var escape = require("underscore").escape;
 function escapeMiddleware(req, res, next){
+  console.log(req.header('Referer'))
   if(process.env.env=="prod"){
     if(req.header('Referer')!==undefined){
       if(req.header('Referer').slice(0,32)=="https://assignbook.herokuapp.com"){
