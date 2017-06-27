@@ -89,10 +89,10 @@ if(cluster.isMaster){
   server.post("/register", function(req, res){
     account.register(req, res);
   });
-  server.get("/login", function(req, res){
-    res.render("twig/login.twig", Object.assign({}, logData(req), {error: null}));
+  server.get("/login", csrfProtection, function(req, res){
+    res.render("twig/login.twig", Object.assign({}, logData(req), {error: null, token: req.csrfToken()}));
   });
-  server.post("/login", function(req, res){
+  server.post("/login", csrfProtection, function(req, res){
     account.login(req, res);
   });
   server.get("/classes", csrfProtection, function(req, res){
