@@ -59,7 +59,8 @@ $(document).ready(function() {
         data: {
           name: name,
           period: period,
-          teacherName: teacherName
+          teacherName: teacherName,
+          _csrf: token
         },
         success: function(data){
           element.parent().parent().hide("fast", function(){

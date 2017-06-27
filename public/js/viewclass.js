@@ -139,7 +139,7 @@ $(document).ready(function() {
           name: className,
           period: classPeriod,
           teacher: classTeacher,
-          "_csrf": token
+          _csrf: token
         },
         success: function(data){
           ele.parent().hide("fast", function(){
@@ -159,7 +159,7 @@ $(document).ready(function() {
         url:"deleteQuestion",
         data:{
           qId: qId,
-          "_csrf": token
+          _csrf: token
         },
         success: function(data){
           ele.parent().hide("fast", function(){
@@ -181,7 +181,7 @@ $(document).ready(function() {
         data:{
           aId: aId,
           qId: qId,
-          "_csrf": token
+          _csrf: token
         },
         success: function(data){
           ele.parent().hide("fast", function(){
@@ -209,7 +209,7 @@ function deleteHomework(array){
           cName: className, cPeriod:
           classPeriod, cTeacher:
           classTeacher,
-          "csrf": token
+          _csrf: token
         },
         //Submits a post request to deleteHomework.php to delete the requested homework
         success:function(data){
@@ -236,7 +236,7 @@ function enroll(name, period, teacher){
       name: name,
       period: period,
       teacher: teacher,
-      "_csrf": token
+      _csrf: token
     },
     success: function(data){
       window.location.reload();
@@ -261,7 +261,7 @@ function addHomework(){
       name: className,
       period: classPeriod,
       teacher: classTeacher,
-      "_csrf": token
+      _csrf: token
     },
     success: function(data){
       window.location.reload();
@@ -281,7 +281,7 @@ function addNotes(){
       name: className,
       period: classPeriod,
       teacher: classTeacher,
-      "_csrf": token
+      _csrf: token
     },
     success: function(data){
       window.location.reload();
@@ -303,7 +303,7 @@ function addQuestion(){
       name: className,
       period: classPeriod,
       teacher: classTeacher,
-      "_csrf": token
+      _csrf: token
     },
     success: function(data){
       window.location.reload();

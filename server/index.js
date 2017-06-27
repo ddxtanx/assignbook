@@ -42,7 +42,8 @@ if(cluster.isMaster){
   path=require("path"),
   helmet=require("helmet"),
   expressEnforcesSsl = require("express-enforces-ssl"),
-  csrf = require("csurf");
+  csrf = require("csurf"),
+  csrfProtection = csrf({ cookie: false });
   var server = express();
   server.set('views', './public');
   server.enable('trust proxy');
@@ -51,7 +52,7 @@ if(cluster.isMaster){
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(), opbeat.middleware.express(), helmet(), csrf());
+  }), compression(), opbeat.middleware.express(), helmet());
   if(process.env.env=="prod"){
     server.use(expressEnforcesSsl());
   }
@@ -89,42 +90,42 @@ if(cluster.isMaster){
     account.register(req, res);
   });
   server.get("/login", function(req, res){
-    res.render("twig/login.twig", Object.assign({}, logData(req), {error: null, token: req.csrfToken()}));
+    res.render("twig/login.twig", Object.assign({}, logData(req), {error: null}));
   });
   server.post("/login", function(req, res){
     account.login(req, res);
   });
-  server.get("/classes", function(req, res){
+  server.get("/classes", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.getClasses(req, res);
     });
   });
-  server.post("/classes", function(req, res){
+  server.post("/classes", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.addClass(req, res);
     });
   });
-  server.post("/viewClass", function(req, res){
+  server.post("/viewClass", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.getClassData(req, res);
     });
   });
-  server.post("/enroll", function(req, res){
+  server.post("/enroll", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.toggleEnroll(req, res);
     });
   });
-  server.post("/deleteHomework", function(req, res){
+  server.post("/deleteHomework", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.deleteHomework(req, res);
     });
   });
-  server.post("/addHomework", function(req, res){
+  server.post("/addHomework", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.addHomework(req, res);
     });
   });
-  server.post("/addNotes", function(req, res){
+  server.post("/addNotes", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.addNotes(req, res);
     });
@@ -136,37 +137,37 @@ if(cluster.isMaster){
       res.redirect("/");
     });
   });
-  server.get("/myClasses", function(req, res){
+  server.get("/myClasses", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       myPage.pageData(req, res)
     });
   });
-  server.post("/addReminder", function(req, res){
+  server.post("/addReminder", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       myPage.addReminder(req, res);
     });
   });
-  server.post("/completeReminder", function(req, res){
+  server.post("/completeReminder", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       myPage.completeReminder(req, res);
     });
   });
-  server.post("/deleteCompleted", function(req, res){
+  server.post("/deleteCompleted", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       myPage.deleteCompleted(req, res);
     });
   });
-  server.post("/completeHomework", function(req, res){
+  server.post("/completeHomework", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       myPage.completeHomework(req, res);
     });
   });
-  server.post("/addQuestion", function(req, res){
+  server.post("/addQuestion", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.addQuestion(req, res);
     });
   });
-  server.post("/addAnswer", function(req, res){
+  server.post("/addAnswer", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.addAnswer(req, res);
     });
@@ -194,22 +195,22 @@ if(cluster.isMaster){
       res.render('twig/survey.twig');
     });
   });
-  server.post("/deleteClass", function(req, res){
+  server.post("/deleteClass", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.deleteClass(req, res);
     });
   });
-  server.post("/deleteNote", function(req, res){
+  server.post("/deleteNote", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.deleteNote(req, res);
     });
   });
-  server.post("/deleteQuestion", function(req, res){
+  server.post("/deleteQuestion", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.deleteQuestion(req, res);
     });
   });
-  server.post("/deleteAnswer", function(req, res){
+  server.post("/deleteAnswer", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.deleteAnswer(req, res);
     })

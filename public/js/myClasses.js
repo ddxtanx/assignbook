@@ -58,7 +58,7 @@ $(document).ready(function() {
               name: name,
               description: description,
               action: "complete",
-              "_csrf": token
+              _csrf: token
             }, function(data) {
                 if (hideCompleted) {
                     $("#homework" + number).hide("fast");
@@ -75,7 +75,7 @@ $(document).ready(function() {
                 data: { name: name,
                   description: description,
                   action: "uncomplete",
-                  "_csrf": token
+                  _csrf: token
                 },
                 success: function() {
                     $("#homework" + number).addClass("notCompleted");
@@ -102,7 +102,7 @@ $(document).ready(function() {
             type: "POST",
             url: "deleteCompleted",
             data: {
-              "_csrf": token
+              _csrf: token
             },
             success: function() {
                 $(".completed").hide("fast", function() {
@@ -141,7 +141,7 @@ $(document).ready(function() {
         var id = $(this).attr("reminderID");
         var eleId = $(this).attr("id");
         var number = eleId.slice(17, eleId.length);
-        ajaxPost("completeReminder", { reminderID: id, "_csrf": token }, function(err, data) {
+        ajaxPost("completeReminder", { reminderID: id, _csrf: token }, function(err, data) {
             if (err) alert("error " + data);
             $("#reminder" + number).hide("fast", function() { $("#reminder" + number).remove(); });
         });
@@ -193,7 +193,7 @@ function addreminder(){
     url:"addReminder",
     data:{
       reminder: reminderText,
-      "_csrf": token
+      _csrf: token
     },
     success:function(data){
       window.location.reload();
