@@ -102,7 +102,7 @@
           <h3>  {{homework.assignmentName}}</h3>
           <div class='completedForm'>
             <label class='completedLabel' for='completedCheck'> Completed? </label>
-            <input type='checkbox' class='checks' id='completedCheck{{loop.index}}' homeworkname='{{homework.assignmentName}}' descr='{{homework.description}}' name='completedCheck' {{(homework.completed)?"checked":""}}></input>
+            <input type='checkbox' class='checks' id='completedCheck{{loop.index}}' homeworkId="{{homework.homeworkId}}" name='completedCheck' {{(homework.completed)?"checked":""}}></input>
           </div>
           <h4> For: {{homework.className}}</h4>
           <h4 class="duedate" duedate="{{homework.dueDate}}"> Due: {{homework.dueDate}}, </h4>

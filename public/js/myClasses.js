@@ -44,27 +44,22 @@ $(document).ready(function() {
     });
     $(".checks").click(function() {
         //.checks, when checked, completes the homework in the database
-        var name = $(this).attr('homeworkname');
-        var description = $(this).attr('descr');
+        var ele = $(this);
+        var hId = ele.attr("homeworkId");
         var hideCompleted = ($("#showCompleted").is(":checked")) ? false : true;
-        //This determines if you are comleting an assignment, or if you are un-completing one
-        var id = $(this).attr('id');
-        //This grabs the div id to use in the number declaration
-        var number = id.slice(14, id.length);
-        var whatAmIDoing = ($(this).is(":checked")) ? "completing" : "uncompleting";
+        var whatAmIDoing = (ele.is(":checked")) ? "completing" : "uncompleting";
         if (whatAmIDoing == "completing") {
             //Here AJAX requests are sent out to complete the homework, so everything appears seamless on the UI
             ajaxPost("completeHomework", {
-              name: name,
-              description: description,
+              homeworkId: hId,
               action: "complete",
               _csrf: token
             }, function(data) {
                 if (hideCompleted) {
-                    $("#homework" + number).hide("fast");
+                    ele.parent().parent().hide("fast");
                 }
-                $("#homework" + number).removeClass("notCompleted");
-                $("#homework" + number).addClass("completed");
+                ele.parent().parent().removeClass("notCompleted");
+                ele.parent().parent().addClass("completed");
             }, function() {
                 alert("ERROR");
             });
@@ -72,14 +67,14 @@ $(document).ready(function() {
             jQuery.ajax({
                 type: "POST",
                 url: "completeHomework",
-                data: { name: name,
-                  description: description,
+                data: {
+                  homeworkId: hId,
                   action: "uncomplete",
                   _csrf: token
                 },
                 success: function() {
-                    $("#homework" + number).addClass("notCompleted");
-                    $("#homework" + number).removeClass("completed");
+                    ele.parent().parent().addClass("notCompleted");
+                    ele.parent().parent().removeClass("completed");
                 }
             });
         }
@@ -138,12 +133,16 @@ $(document).ready(function() {
     //These two buttons hide or show the Reminder Creation form, and the create and cancel buttons.
     $(".reminderChecks").click(function() {
         //This functions like the homework check, and completes the reminders in the database
-        var id = $(this).attr("reminderID");
-        var eleId = $(this).attr("id");
-        var number = eleId.slice(17, eleId.length);
-        ajaxPost("completeReminder", { reminderID: id, _csrf: token }, function(err, data) {
+        var ele = $(this);
+        var id = ele.attr("reminderID");
+        ajaxPost("completeReminder", {
+          reminderID: id,
+          _csrf: token
+        }, function(err, data) {
             if (err) alert("error " + data);
-            $("#reminder" + number).hide("fast", function() { $("#reminder" + number).remove(); });
+            ele.parent().parent().hide("fast", function() {
+              ele.parent().parent().remove(); 
+            });
         });
     });
     var element, period, name, teacher;

@@ -130,15 +130,12 @@ $(document).ready(function() {
     //Cancels the question form
     $(".delNote").click(function(){
       var ele = $(this);
-      var note = ele.attr("note");
+      var noteId = ele.attr("noteId");
       $.ajax({
         method: "POST",
         url: "deleteNote",
         data:{
-          note: note,
-          name: className,
-          period: classPeriod,
-          teacher: classTeacher,
+          noteId: noteId,
           _csrf: token
         },
         success: function(data){
@@ -193,40 +190,27 @@ $(document).ready(function() {
         }
       })
     })
-});
-function deleteHomework(array){
-    var hName = array[0];
-    var hDueDate = array[1];
-    var hDescription = array[2];
-    var x = array[3];
-    //Initializing variables for ajax and hiding
-    $.ajax({
+    $(".dHomework").click(function(){
+      var ele = $(this);
+      var hId = ele.attr("homeworkId");
+      $.ajax({
         method: "POST",
         url:"deleteHomework",
-        data:{hName: hName,
-          hDueDate: hDueDate,
-          hDescription: hDescription,
-          cName: className, cPeriod:
-          classPeriod, cTeacher:
-          classTeacher,
+        data:{
+          hId: hId,
           _csrf: token
         },
-        //Submits a post request to deleteHomework.php to delete the requested homework
-        success:function(data){
-          var data = JSON.parse(data);
-          if(data.deleted){
-            $(".homework"+x).hide("fast",function(){
-               $(".homework"+x).remove();
-            });
-          } else{
-            alert("You can't delete homework that you didn't post!");
-          }
+        success:function(){
+          ele.parent().hide("fast", function(){
+            ele.parent().remove();
+          })
         },
-        error:function(data){
-            alert(JSON.stringify(data));
+        error: function(data){
+          alert(JSON.stringify(data));
         }
-    });
-}
+      })
+    })
+});
 //This function is used to delete mistyped or incorrect homework in the database via a button in viewClass.php
 function enroll(name, period, teacher){
   $.ajax({

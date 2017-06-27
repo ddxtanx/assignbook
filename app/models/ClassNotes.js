@@ -6,7 +6,8 @@ var classNotesSchema = new schema({
   userId: String,
   className: String,
   classPeriod: Number,
-  classTeacher: String
+  classTeacher: String,
+  noteId: String
 });
 var ClassNotes = mongoose.model("ClassNotes", classNotesSchema, "classNotes");
 module.exports = ClassNotes;

@@ -125,9 +125,9 @@
       <input id="date" type="date"></input>
       <div id="homeworkDiv">
         {% for homework in homeworkArray %}
-        <div class='homeworkClass homework{{loop.index}}'>
-          {% if id == homework.userIDWhoAdded %}
-          <button type='button' class='close' aria-label='Close' onclick='deleteHomework(["{{homework.assignmentName}}", "{{homework.dueDate}}", "{{homework.description}}", {{loop.index}}]);'>
+        <div class='homeworkClass'>
+          {% if id == homework.userId %}
+          <button type='button' class='close dHomework' homeworkId="{{homework.homeworkId}}" aria-label='Close'>
             <span>&times;</span>
           </button>
           {% endif %}
@@ -165,7 +165,7 @@
           {% for note in notesArray %}
           <div class='notesClass notes{{loop.index}}'>
               {% if id == note.userId %}
-              <button type='button' class='close delNote' note="{{note.note}}" aria-label='Close'>
+              <button type='button' class='close delNote' noteId="{{note.noteId}}" aria-label='Close'>
                 <span>&times;</span>
               </button>
               {% endif %}

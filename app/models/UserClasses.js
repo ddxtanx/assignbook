@@ -4,7 +4,7 @@ var userClassSchema = new schema({
   className: String,
   classPeriod: Number,
   classTeacher: String,
-  userID: String
+  userId: String
 });
 var UserClass = mongoose.model("UserClasses", userClassSchema, "userClasses");
 module.exports = UserClass;

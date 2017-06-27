@@ -6,7 +6,8 @@ var userHomeworkSchema = new schema({
   description: String,
   className: String,
   completed: Boolean,
-  userID:String
+  userId:String,
+  homeworkId: String
 });
 var UserHomework = mongoose.model("UserHomework", userHomeworkSchema, "userHomework");
 module.exports = UserHomework;

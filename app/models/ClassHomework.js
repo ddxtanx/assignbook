@@ -7,7 +7,8 @@ var classHomeworkSchema = new schema({
   className: String,
   classPeriod: Number,
   classTeacher: String,
-  userIDWhoAdded: String
+  userId: String,
+  homeworkId: String
 });
 var ClassHomework = mongoose.model("ClassHomework", classHomeworkSchema, "classHomework");
 module.exports = ClassHomework;
