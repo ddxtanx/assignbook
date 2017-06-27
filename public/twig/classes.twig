@@ -87,6 +87,7 @@
           <input type='hidden' name='name' value='{{class.name}}'></input>
           <input type='hidden' name='period' value='{{class.period}}'></input>
           <input type='hidden' name='teacher' value='{{class.teacherName}}'></input>
+          <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
         <br/>
         <h3 class='taughtBy'> Taught By: {{class.teacherName}}</h3>
