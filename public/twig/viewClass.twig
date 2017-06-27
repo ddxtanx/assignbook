@@ -112,6 +112,7 @@
           <textarea id="homeworkDescription" form="homeworkForm"></textarea>
           <h3> When is this due? </h3>
           <input type="date" name="duedate" id="homeworkDate"></input>
+          <input type="hidden" name="_csrf" value="{{token}}"/>
           <br/>
           <br/>
           <button type="button" class="btn btn-success" onclick="addHomework()">Submit</button>
