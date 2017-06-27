@@ -150,6 +150,25 @@ $(document).ready(function() {
         }
       });
     });
+    $(".qDelete").click(function(){
+      var ele = $(this);
+      var qId = ele.attr("questionId");
+      $.ajax({
+        method:"POST",
+        url:"deleteQuestion",
+        data:{
+          qId: qId
+        },
+        success: function(data){
+          ele.parent().hide("fast", function(){
+            ele.parent().remove();
+          })
+        },
+        error: function(data){
+          alert(JSON.stringify(data));
+        }
+      })
+    })
 });
 function deleteHomework(array){
     var hName = array[0];
@@ -257,7 +276,7 @@ function addQuestion(){
     error: function(data){
       alert(JSON.stringify(data));
     }
-  })
+  });
 }
 function addAnswer(questionId, qNumber){
   var answer = $("#answer"+qNumber).val();

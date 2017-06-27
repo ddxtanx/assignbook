@@ -180,6 +180,11 @@ if(cluster.isMaster){
   server.post("/deleteNote", function(req, res){
     checkIn(req, res, function(){
       classes.deleteNote(req, res);
+    });
+  });
+  server.post("/deleteQuestion", function(req, res){
+    checkIn(req, res, function(){
+      classes.deleteQuestion(req, res);
     })
   })
   var PORT = process.env.PORT;

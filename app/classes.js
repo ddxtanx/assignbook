@@ -354,6 +354,7 @@ function addQuestion(req, res){
   date = `${year}-${month}-${day}`;
   var questionId = Math.random()*Math.pow(10,18);
   var NewQuestion = new Questions({
+    userId: userId,
     userWhoAsked: req.session.name,
     usernameDisplayed: displayedName,
     question: question,
@@ -481,6 +482,17 @@ function deleteNote(req, res){
     res.end();
   })
 }
+function deleteQuestion(req, res){
+  var qId = req.body.qId;
+  var userId = req.session.id;
+  Questions.remove({
+    questionId: qId,
+    userId: userId
+  }, function(err, resp){
+    if(err) throw err;
+    res.end();
+  })
+}
 module.exports = {
   getClasses: getClasses,
   addClass: addClass,
@@ -492,5 +504,6 @@ module.exports = {
   addQuestion: addQuestion,
   addAnswer: addAnswer,
   deleteClass: deleteClass,
-  deleteNote: deleteNote
+  deleteNote: deleteNote,
+  deleteQuestion: deleteQuestion
 }

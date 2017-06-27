@@ -198,6 +198,11 @@
           <div id="questions">
             {% for question in questionsArray %}
             <div class='questionsClass question{{loop.index}}'>
+              {% if id == question.userId %}
+              <button type='button' class='close qDelete' aria-label='Close' questionId="{{question.questionId}}">
+                <span>&times;</span>
+              </button>
+              {% endif %}
               <h3> Asked by:{{question.usernameDisplayed}}</h3>
               <h3> On: {{question.dateAsked}}</h3>
               <h4>{{question.question}}</h4>

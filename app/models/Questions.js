@@ -2,6 +2,7 @@ var mongoose = require('./connection');
 var Answer = require("./Answers.js");
 var schema = mongoose.Schema;
 var questionSchema = new schema({
+  userId: String,
   userWhoAsked: String,
   usernameDisplayed: String,
   question: String,
