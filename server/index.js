@@ -2,13 +2,20 @@ var opbeat = require('opbeat').start();
 var cluster = require("cluster");
 var escape = require("underscore").escape;
 function escapeMiddleware(req, res, next){
-  if(req.header('Referer').slice(0,31)=="https://assignbook.herokuapp.com"){
+  if(process.env.env=="prod"){
+    if(req.header('Referer').slice(0,31)=="https://assignbook.herokuapp.com"){
+      Object.keys(req.body).map(function(key, index){
+        req.body[key] = escape(req.body[key]);
+      });
+      next();
+    } else{
+      res.end();
+    }
+  } else{
     Object.keys(req.body).map(function(key, index){
       req.body[key] = escape(req.body[key]);
     });
     next();
-  } else{
-    res.end();
   }
 }
 if(cluster.isMaster){
