@@ -1,9 +1,9 @@
 var opbeat = require('opbeat').start();
 var cluster = require("cluster");
-var underscore = require("underscore");
+var escape = require("underscore").escape;
 function escapeMiddleware(req, res, next){
   Object.keys(req.body).map(function(key, index){
-    req.body[key] = underscore.escape(req.body[key]);
+    req.body[key] = escape(req.body[key]);
   });
   next();
 }
