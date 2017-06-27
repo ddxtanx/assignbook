@@ -22,7 +22,7 @@ function getClasses(req, res){
     }
   },function(err, classes){
     if(err) throw err;
-    res.render("twig/classes.twig", Object.assign({}, logData(req), {classesArray:classes}));
+    res.render("twig/classes.twig", Object.assign({}, logData(req), {classesArray:classes, token: req.csrfToken()}));
   })
 }
 function addClass(req, res){
@@ -99,7 +99,7 @@ function getData(classData, req, res){
     }
   }, function(err, results){
     if(err) throw err;
-    res.render("twig/viewClass.twig", Object.assign({}, logData(req), Object.assign({}, results, classData)));
+    res.render("twig/viewClass.twig", Object.assign({token: req.csrfToken()}, logData(req), Object.assign({}, results, classData)));
   })
 }
 function toggleEnroll(req, res){

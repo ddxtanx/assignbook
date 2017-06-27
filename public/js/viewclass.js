@@ -138,7 +138,8 @@ $(document).ready(function() {
           note: note,
           name: className,
           period: classPeriod,
-          teacher: classTeacher
+          teacher: classTeacher,
+          "_csrf": token
         },
         success: function(data){
           ele.parent().hide("fast", function(){
@@ -157,7 +158,8 @@ $(document).ready(function() {
         method:"POST",
         url:"deleteQuestion",
         data:{
-          qId: qId
+          qId: qId,
+          "_csrf": token
         },
         success: function(data){
           ele.parent().hide("fast", function(){
@@ -178,7 +180,8 @@ $(document).ready(function() {
         url:"deleteAnswer",
         data:{
           aId: aId,
-          qId: qId
+          qId: qId,
+          "_csrf": token
         },
         success: function(data){
           ele.parent().hide("fast", function(){
@@ -200,7 +203,14 @@ function deleteHomework(array){
     $.ajax({
         method: "POST",
         url:"deleteHomework",
-        data:{hName: hName, hDueDate: hDueDate, hDescription: hDescription, cName: className, cPeriod: classPeriod, cTeacher: classTeacher},
+        data:{hName: hName,
+          hDueDate: hDueDate,
+          hDescription: hDescription,
+          cName: className, cPeriod:
+          classPeriod, cTeacher:
+          classTeacher,
+          "csrf": token
+        },
         //Submits a post request to deleteHomework.php to delete the requested homework
         success:function(data){
           var data = JSON.parse(data);
@@ -225,7 +235,8 @@ function enroll(name, period, teacher){
     data: {
       name: name,
       period: period,
-      teacher: teacher
+      teacher: teacher,
+      "_csrf": token
     },
     success: function(data){
       window.location.reload();
@@ -249,7 +260,8 @@ function addHomework(){
       duedate: dueDate,
       name: className,
       period: classPeriod,
-      teacher: classTeacher
+      teacher: classTeacher,
+      "_csrf": token
     },
     success: function(data){
       window.location.reload();
@@ -268,7 +280,8 @@ function addNotes(){
       note: note,
       name: className,
       period: classPeriod,
-      teacher: classTeacher
+      teacher: classTeacher,
+      "_csrf": token
     },
     success: function(data){
       window.location.reload();
@@ -289,7 +302,8 @@ function addQuestion(){
       anonymous: anonymous,
       name: className,
       period: classPeriod,
-      teacher: classTeacher
+      teacher: classTeacher,
+      "_csrf": token
     },
     success: function(data){
       window.location.reload();
@@ -309,7 +323,8 @@ function addAnswer(questionId, qNumber){
     data:{
       answer: answer,
       anonymous: anon,
-      questionId: questionId
+      questionId: questionId,
+      "_csrf": token
     },
     success: function(data){
       window.location.reload();

@@ -17,6 +17,7 @@
     "clean-css": "^4.1.4",
     "client-sessions": "^0.8.0",
     "compression": "^1.6.2",
+    "csurf": "^1.9.0",
     "express": "^4.15.3",
     "express-enforces-ssl": "^1.1.0",
     "express-sanitize-escape": "^1.1.0",
