@@ -53,17 +53,18 @@
           <h3> Please input the class' name. </h3>
           <input type="text" name="className" placeholder="Name here:" required> </input>
         </div>
-        <div id="emailDiv">
+        <div id="periodDiv">
           <h3> Please input the period you have it. </h3>
           <input type="number" name="period" min="1" max="8" required> </input>
         </div>
-        <div id="passwordDiv">
+        <div id="teacherDiv">
           <h3> Please input the teacher's name.</h3>
           <input type="text" name="teacherName" placeholder="Name here:" required> </input>
         </div>
         <div id="finishDiv">
           <input type="submit" class="btn btn-success" id="finishButton" name="done" value="Finish!"> </input>
         </div>
+        <input type="hidden" name="_csrf" value="{{token}}"/>
       </form>
       <button type="button" class="btn btn-info" id="cancel"> Cancel </button>
     </div>

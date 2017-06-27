@@ -54,19 +54,12 @@ $(document).ready(function() {
         var whatAmIDoing = ($(this).is(":checked")) ? "completing" : "uncompleting";
         if (whatAmIDoing == "completing") {
             //Here AJAX requests are sent out to complete the homework, so everything appears seamless on the UI
-            /*jQuery.ajax({
-                type: "POST",
-                url: "../web/complete",
-                data: { name: name, action: "complete" },
-                success: function() {
-                    if (hideCompleted) {
-                        $("#homework" + number).hide("fast");
-                    }
-                    $("#homework" + number).removeClass("notCompleted");
-                    $("#homework" + number).addClass("completed");
-                }
-            });*/
-            ajaxPost("completeHomework", { name: name, description: description, action: "complete" }, function(data) {
+            ajaxPost("completeHomework", {
+              name: name,
+              description: description,
+              action: "complete",
+              "_csrf": token
+            }, function(data) {
                 if (hideCompleted) {
                     $("#homework" + number).hide("fast");
                 }
@@ -79,7 +72,11 @@ $(document).ready(function() {
             jQuery.ajax({
                 type: "POST",
                 url: "completeHomework",
-                data: { name: name, description: description, action: "uncomplete" },
+                data: { name: name,
+                  description: description,
+                  action: "uncomplete",
+                  "_csrf": token
+                },
                 success: function() {
                     $("#homework" + number).addClass("notCompleted");
                     $("#homework" + number).removeClass("completed");
@@ -104,6 +101,9 @@ $(document).ready(function() {
         jQuery.ajax({
             type: "POST",
             url: "deleteCompleted",
+            data: {
+              "_csrf": token
+            },
             success: function() {
                 $(".completed").hide("fast", function() {
                     $(".completed").remove();
@@ -141,7 +141,7 @@ $(document).ready(function() {
         var id = $(this).attr("reminderID");
         var eleId = $(this).attr("id");
         var number = eleId.slice(17, eleId.length);
-        ajaxPost("completeReminder", { reminderID: id }, function(err, data) {
+        ajaxPost("completeReminder", { reminderID: id, "_csrf": token }, function(err, data) {
             if (err) alert("error " + data);
             $("#reminder" + number).hide("fast", function() { $("#reminder" + number).remove(); });
         });
@@ -192,7 +192,8 @@ function addreminder(){
     method:"POST",
     url:"addReminder",
     data:{
-      reminder: reminderText
+      reminder: reminderText,
+      "_csrf": token
     },
     success:function(data){
       window.location.reload();

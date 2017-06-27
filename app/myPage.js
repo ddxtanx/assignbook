@@ -29,7 +29,7 @@ function pageData(req, res){
     }
   }, function(err, results){
     if(err) throw err;
-    res.render("twig/myClasses.twig", Object.assign({}, {classesArray: results.classes, homeworkArray: results.homework, remindersArray: results.reminders}, logData(req)));
+    res.render("twig/myClasses.twig", Object.assign({}, {token: req.csrfToken(), classesArray: results.classes, homeworkArray: results.homework, remindersArray: results.reminders}, logData(req)));
   });
 }
 function addReminder(req, res){

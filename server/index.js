@@ -42,7 +42,8 @@ if(cluster.isMaster){
   compression = require("compression"),
   path=require("path"),
   helmet=require("helmet"),
-  expressEnforcesSsl = require("express-enforces-ssl");
+  expressEnforcesSsl = require("express-enforces-ssl"),
+  csrf = require("csurf");
   var server = express();
   server.set('views', './public');
   server.enable('trust proxy');
@@ -51,7 +52,7 @@ if(cluster.isMaster){
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
     activeDuration: 30 * 60 * 1000
-  }), compression(), opbeat.middleware.express(), helmet());
+  }), compression(), opbeat.middleware.express(), helmet(), csrf());
   if(process.env.env=="prod"){
     server.use(expressEnforcesSsl());
   }
@@ -89,7 +90,7 @@ if(cluster.isMaster){
     account.register(req, res);
   });
   server.get("/login", function(req, res){
-    res.render("twig/login.twig", Object.assign({}, logData(req), {error: null}));
+    res.render("twig/login.twig", Object.assign({}, logData(req), {error: null, token: req.csrfToken()}));
   });
   server.post("/login", function(req, res){
     account.login(req, res);
