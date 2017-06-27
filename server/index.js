@@ -1,5 +1,12 @@
 var opbeat = require('opbeat').start();
 var cluster = require("cluster");
+var underscore = require("underscore");
+function escapeMiddleware(req, res, next){
+  Object.keys(req.body).map(function(key, index){
+    req.body[key] = underscore.escape(req.body[key]);
+  });
+  next();
+}
 if(cluster.isMaster){
   var cpuCount = require('os').cpus().length;
    for (var i = 0; i < cpuCount; i += 1) {
@@ -19,12 +26,11 @@ if(cluster.isMaster){
   compression = require("compression"),
   path=require("path"),
   helmet=require("helmet"),
-  expressEnforcesSsl = require("express-enforces-ssl"),
-  expressSanitized = require('express-sanitize-escape');
+  expressEnforcesSsl = require("express-enforces-ssl");
   var server = express();
   server.set('views', './public');
   server.enable('trust proxy');
-  server.use( expressSanitized.middleware(), bodyParser(), express.static("./public", { maxAge: 86400000 }), sessions({
+  server.use(bodyParser(), escapeMiddleware, express.static("./public", { maxAge: 86400000 }), sessions({
     cookieName: "session",
     secret: process.env.SESSION_SECRET,
     duration: 60 * 60 * 1000,
@@ -185,6 +191,11 @@ if(cluster.isMaster){
   server.post("/deleteQuestion", function(req, res){
     checkIn(req, res, function(){
       classes.deleteQuestion(req, res);
+    });
+  });
+  server.post("/deleteAnswer", function(req, res){
+    checkIn(req, res, function(){
+      classes.deleteAnswer(req, res);
     })
   })
   var PORT = process.env.PORT;

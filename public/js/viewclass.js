@@ -169,6 +169,27 @@ $(document).ready(function() {
         }
       })
     })
+    $(".aDelete").click(function(){
+      var ele = $(this);
+      var qId = ele.attr("questionId");
+      var aId = ele.attr("answerId");
+      $.ajax({
+        method:"POST",
+        url:"deleteAnswer",
+        data:{
+          aId: aId,
+          qId: qId
+        },
+        success: function(data){
+          ele.parent().hide("fast", function(){
+            ele.parent().remove();
+          });
+        },
+        error: function(data){
+          alert(JSON.stringify(data));
+        }
+      })
+    })
 });
 function deleteHomework(array){
     var hName = array[0];

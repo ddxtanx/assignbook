@@ -218,6 +218,11 @@
                 <div id='answersFor{{question.questionId}}'>
                   {% for answer in question.answers %}
                   <div class='answersClass answer{{loop.index}}'>
+                      {% if id == answer.userId %}
+                      <button type='button' class='close aDelete' aria-label='Close' questionId="{{question.questionId}}" answerId="{{answer.answerId}}">
+                        <span>&times;</span>
+                      </button>
+                      {% endif %}
                       <h3> Answered By: {{answer.usernameDisplayed}}</h3>
                       <h3> On: {{answer.dateAnswered}}</h3>
                       <h4>{{answer.answer}}</h4>

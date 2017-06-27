@@ -375,6 +375,8 @@ function addAnswer(req, res){
   var anon = (req.body.anonymous=='true');
   var displayedName = (anon)?"Anonymous":req.session.name;
   var questionId = req.body.questionId;
+  var userId = req.session.id;
+  var answerId = Math.random()*Math.pow(10,18);
   var DateObj = new Date(),
   year = DateObj.getFullYear(),
   month = DateObj.getMonth(),
@@ -385,6 +387,8 @@ function addAnswer(req, res){
   }, {
     $push:{
       answers: {
+        userId: userId,
+        answerId: answerId,
         userWhoAnswered: req.session.name,
         usernameDisplayed: displayedName,
         answer: answer,
@@ -493,6 +497,24 @@ function deleteQuestion(req, res){
     res.end();
   })
 }
+function deleteAnswer(req, res){
+  var aId = req.body.aId;
+  var qId = req.body.qId;
+  var userId = req.session.id;
+  Questions.update({
+    questionId: qId
+  }, {
+    "$pull":{
+      answers:{
+        answerId: aId,
+        userId: userId
+      }
+    }
+  }, function(err, resp){
+    if(err) throw err;
+    res.end();
+  })
+}
 module.exports = {
   getClasses: getClasses,
   addClass: addClass,
@@ -505,5 +527,6 @@ module.exports = {
   addAnswer: addAnswer,
   deleteClass: deleteClass,
   deleteNote: deleteNote,
-  deleteQuestion: deleteQuestion
+  deleteQuestion: deleteQuestion,
+  deleteAnswer: deleteAnswer
 }
