@@ -4,8 +4,8 @@ var escape = require("underscore").escape;
 function escapeMiddleware(req, res, next){
   console.log(req.headers)
   if(process.env.env=="prod"){
-    if(req.header('Referer')!==undefined){
-      if(req.header('Referer').slice(0,32)=="https://assignbook.herokuapp.com"){
+    if(req.headers.host!==undefined){
+      if(req.headers.host=="assignbook.herokuapp.com"){
         Object.keys(req.body).map(function(key, index){
           req.body[key] = escape(req.body[key]);
         });
