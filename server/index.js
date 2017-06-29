@@ -213,8 +213,18 @@ if(cluster.isMaster){
   server.post("/deleteAnswer", csrfProtection, function(req, res){
     checkIn(req, res, function(){
       classes.deleteAnswer(req, res);
-    })
-  })
+    });
+  });
+  server.get("/settings", csrfProtection, function(req, res){
+    checkIn(req, res, function(){
+      res.render("twig/settings.twig", Object.assign({}, logData(req), {token: req.csrfToken()}));
+    });
+  });
+  server.post("/changePass", csrfProtection, function(req, res){
+    checkIn(req, res, function(){
+      account.changeRequest(req, res);
+    });
+  });
   var PORT = process.env.PORT;
   console.log(`SERVER LISTENING ON PORT ${PORT}`);
   server.listen(PORT);

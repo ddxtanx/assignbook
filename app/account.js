@@ -136,6 +136,31 @@ function forgot(req, res){
   * and generate a new site id, and save those together in a reset document,
   * then send an email with the site id as a message
 */
+function changePass(userId, pass, email, cb){
+  passHash(pass, function(err, hash){
+    //Hash the password
+    if(err) throw err;
+    User.update({
+      id: userId
+    }, {
+      $set:{
+        password: hash
+      }
+    }, function(err, resp){
+        if(err) throw err;
+        var mailOptions = {
+          from: '"Easy Assignbook Password Assistance" <gcc@ameritech.net>',
+          to: email,
+          subject: "Password Change",
+          text: "We have recently received a request to change your password. If you have requested to change your password, do not worry. If you did not make this request, please reply to this email to receive assistance. Thank you!"
+        }
+        transporter.sendMail(mailOptions, function(err, info){
+          if (err) throw err;
+        })
+        cb();
+    });
+  });
+}
 function change(req, res){
   var siteId = req.body.siteId;
   //Site id is same from aboce
@@ -146,34 +171,51 @@ function change(req, res){
     if(reset!==null){
       //If a reset request has come through with that id, procees
       var userId = reset.userId;
-      var pass = req.body.pass;
-      passHash(pass, function(err, hash){
-        //Hash the password
-        if(err) throw err;
-        User.update({
-          id: userId
-        }, {
-          $set:{
-            password: hash
-          }
-        }, function(err, resp){
-          //Update the user with the id with the new password
-          if(err) throw err;
+      User.findOne({
+        id: userId
+      }, function(err, user){
+        var pass = req.body.pass;
+        changePass(userId, pass, user.email, function(){
           Reset.remove({
             userId: userId
           });
           //Remove the reset request
           res.end();
-        })
+        });
       })
     } else{
       res.redirect("/");
     }
   })
 }
+function changeRequest(req, res){
+  var userId = req.session.id;
+  var oldPass = req.body.oldPass;
+  var newPass = req.body.newPass;
+  User.findOne({
+    id: userId
+  }, function(err, user){
+    if(err) throw err;
+    bcrypt.compare(oldPass, user.password, function(err, same){
+      if(err) throw err;
+      if(same){
+        changePass(userId, newPass, req.session.email, function(){
+          var data = {success: true};
+          res.writeHead(200, {"Content-Type": "text/json"});
+          res.end(JSON.stringify(data));
+        })
+      } else{
+        var data = {success: false};
+        res.writeHead(200, {"Content-Type": "text/json"});
+        res.end(JSON.stringify(data));
+      }
+    })
+  })
+}
 module.exports = {
   register: register,
   login: login,
   forgot: forgot,
-  change: change
+  change: change,
+  changeRequest: changeRequest
 }
