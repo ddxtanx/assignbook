@@ -27,7 +27,10 @@ function pageData(req, res){
       });
     },
     homework: function(cb){
-        UserHomework.find({userId: userId}, {_id: false}, {sort: 'dueDate'}, function(err, homework){
+        UserHomework.find({userId: userId}, {_id: false}, {sort: {
+          dueDate: 1,
+          classPeriod: 1
+        }}, function(err, homework){
           cb(err, homework);
         });
     },
