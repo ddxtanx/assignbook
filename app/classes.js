@@ -296,6 +296,7 @@ function addHomework(req, res){
       //For every person in the class, add the new homework into their homework
       var NewUserHomework = new UserHomework(Object.assign({}, homeworkData, {
         className: req.body.name,
+        classPeriod: req.body.period,
         completed: false,
         userId: id.userId
       }));

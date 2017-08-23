@@ -5,6 +5,7 @@ var userHomeworkSchema = new schema({
   dueDate: String,
   description: String,
   className: String,
+  classPeriod: Number,
   completed: Boolean,
   userId:String,
   homeworkId: String
