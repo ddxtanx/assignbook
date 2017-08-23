@@ -50,8 +50,8 @@ if(cluster.isMaster){
   server.use(bodyParser(), escapeMiddleware, express.static("./public", { maxAge: 86400000 }), sessions({
     cookieName: "session",
     secret: process.env.SESSION_SECRET,
-    duration: 60 * 60 * 1000,
-    activeDuration: 30 * 60 * 1000
+    duration: 7 * 24 * 60 * 60 * 1000,
+    activeDuration: 7 * 24 * 60 * 60 * 1000 //Cookies are valid for 1 week
   }), compression(), opbeat.middleware.express(), helmet());
   if(process.env.env=="prod"){
     server.use(expressEnforcesSsl());
