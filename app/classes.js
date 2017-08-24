@@ -111,7 +111,7 @@ function getData(classData, req, res){
     notesArray: function(cb){
       ClassNotes.find(classQuery, {_id: false}, {sort: 'date'}, function(err, notes){
         notes = notes.map(function(note){
-          note = note.replace(/\r?\n/g, '<br />');
+          note.note = note.note.replace(/\r?\n/g, '<br />');
         });
         cb(err, notes)
       })
