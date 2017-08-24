@@ -110,6 +110,9 @@ function getData(classData, req, res){
     },
     notesArray: function(cb){
       ClassNotes.find(classQuery, {_id: false}, {sort: 'date'}, function(err, notes){
+        notes = notes.map(function(note){
+          note = note.replace(/\r?\n/g, '<br />');
+        });
         cb(err, notes)
       })
     },
@@ -342,7 +345,7 @@ function deleteHomework(req, res){
   })
 }
 function addNotes(req, res){
-  var note = req.body.note;
+  var note = req.body.note.replace(/\r?\n/g, '<br />');;
   var classData = {
     className: req.body.name,
     classPeriod: req.body.period,
