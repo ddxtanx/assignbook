@@ -6,6 +6,7 @@ function escapeMiddleware(req, res, next){
     if(req.headers.host!==undefined){
       if(req.headers.host=="assignbook.herokuapp.com"){
         Object.keys(req.body).map(function(key, index){
+          console.log(req.body[key]);
           req.body[key] = escape(req.body[key]);
         });
         next();
