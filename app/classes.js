@@ -347,7 +347,8 @@ function deleteHomework(req, res){
   })
 }
 function addNotes(req, res){
-  var note = req.body.note.replace(/\r?\n/g, '<br />');;
+  console.log(note);
+  var note = req.body.note.replace(/\r?\n/g, '<br />');
   var classData = {
     className: req.body.name,
     classPeriod: req.body.period,
