@@ -256,7 +256,7 @@ function addHomework(){
   })
 }
 function addNotes(){
-  var note = $("#notesText").val().replace(/\r?\n|\r/g, " ");
+  var note = $("#notesText").val();
   $.ajax({
     method: "POST",
     url: "addNotes",
