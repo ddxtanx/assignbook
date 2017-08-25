@@ -1,1 +1,1 @@
-$(document).ready(function(){1==isLoggedIn?$(".notLoggedIn").remove():$(".isLoggedIn").remove()}),$(document).ready(function(){$("#hamDiv").click(function(e){e.preventDefault(),$("#wrapper").toggleClass("toggled")})});
+$(document).ready(function(){1==isLoggedIn?$(".notLoggedIn").remove():$(".isLoggedIn").remove()});
