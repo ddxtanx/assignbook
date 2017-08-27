@@ -2,6 +2,7 @@ var CronJob = require("cron").CronJob;
 var ClassHomework = require("../app/models/ClassHomework");
 var Questions = require("../app/models/Questions");
 var UserHomework = require("../app/models/UserHomework");
+var ClassNotes = require("../app/models/ClassNotes");
 var now = new Date();
 var modelDateArray = [
     {
@@ -15,6 +16,10 @@ var modelDateArray = [
     {
         obj: UserHomework,
         date: "dueDate"
+    },
+    {
+        obj: ClassNotes,
+        date: "date"
     }
 ]
 var manageJob = new CronJob("0 0 * * *", function(){
