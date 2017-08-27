@@ -110,7 +110,11 @@ function getData(classData, req, res){
     },
     notesArray: function(cb){
       ClassNotes.find(classQuery, {_id: false}, {sort: 'date'}, function(err, notes){
-        cb(err, notes)
+        notes = notes.map(function(note){
+          var newNote = note;
+          newNote.note = newNote.note.replace(/\n/g, "<br />");
+          return newNote;
+        });
       })
     },
     questionsArray: function(cb){
