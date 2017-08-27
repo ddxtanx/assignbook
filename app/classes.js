@@ -115,6 +115,7 @@ function getData(classData, req, res){
           newNote.note = newNote.note.replace(/\n/g, "<br />");
           return newNote;
         });
+        cb(err, notes);
       })
     },
     questionsArray: function(cb){
