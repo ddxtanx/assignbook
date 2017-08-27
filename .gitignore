@@ -3,3 +3,4 @@ log.txt
 /public/helpFiles
 /public/js/minifier.js
 .DS_Store
+.env
