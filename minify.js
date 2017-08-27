@@ -1,3 +1,4 @@
+'use strict';
 var fs = require("fs");
 var exec = require("child_process").exec;
 fs.readdir("./public/js/", function(err, files){
