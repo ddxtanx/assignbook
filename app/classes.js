@@ -112,7 +112,7 @@ function getData(classData, req, res){
       ClassNotes.find(classQuery, {_id: false}, {sort: 'date'}, function(err, notes){
         notes = notes.map(function(note){
           var newNote = note;
-          newNote.note = newNote.note.replace(/\n/g, "<br />");
+          newNote.note = newNote.note.replace(/\n/g, "<br />").replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
           return newNote;
         });
         cb(err, notes);
