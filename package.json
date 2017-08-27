@@ -9,7 +9,11 @@
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"
   },
-  "author": "",
+  "author": "Garrett Credi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ddxtanx/assignbook"
+  },
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^1.0.2",
