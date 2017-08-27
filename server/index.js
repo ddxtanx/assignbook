@@ -44,7 +44,9 @@ if(cluster.isMaster){
   helmet=require("helmet"),
   expressEnforcesSsl = require("express-enforces-ssl"),
   csrf = require("csurf"),
-  csrfProtection = csrf({ cookie: false });
+  csrfProtection = csrf({ cookie: false }),
+  manageJob = require("./manageDB");
+  manageJob.start();
   var server = express();
   server.set('views', './public');
   server.enable('trust proxy');
