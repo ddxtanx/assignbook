@@ -70,7 +70,7 @@ if(cluster.isMaster){
   }
   function logData(req){
     if(req.session!==undefined){
-      return {userName: req.session.name, email: req.session.email, loggedin: req.session.active, id:req.session.id};
+      return {userName: req.session.name, email: req.session.email, loggedin: req.session.active|0, id:req.session.id};
     } else{
       return {userName: false, email: false, loggedin: 0, id: false};
     }
