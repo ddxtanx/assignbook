@@ -31,11 +31,12 @@ $(document).ready(function() {
         datePicked = Date.parse($("#date").val());
         for (var x = 0; x < homeworkArray.length; x++) {
             var homeworkDueDate = Date.parse(homeworkArray[x].dueDate);
-            console.log(homeworkDueDate);
-            if (datePicked <= homeworkDueDate) {
-                $(".homework" + x).show("fast");
+            if (datePicked == homeworkDueDate) {
+                console.log("Showing homework"+x);
+                $("#homework" + (x+1)).show("fast");
             } else {
-                $(".homework" + x).hide("fast");
+                console.log("Hiding homework"+x);
+                $("#homework" + (x+1)).hide("fast");
             }
             if (isNaN(datePicked)) {
                 $(".homeworkClass").show("fast");
