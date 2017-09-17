@@ -96,7 +96,7 @@ function login(req, res){
       });
     }else{
       //If no user exists with the email, stop and render login
-      res.redirect("/login");
+      res.render("twig/login.twig", Object.assign({}, logData(req), {error:"incorrect", token: req.csrfToken()}));
     }
   });
 }
