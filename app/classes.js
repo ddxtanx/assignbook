@@ -16,7 +16,7 @@ function logData(req){
 function createDate(){
   var DateObj = new Date();
   var year = DateObj.getFullYear();
-  var month = DateObj.getMonth();
+  var month = DateObj.getMonth()+1;
   var day = DateObj.getDate();
   var date = `${year}-${month}-${day}`;
   return date;
