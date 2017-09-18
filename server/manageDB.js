@@ -5,7 +5,7 @@ var Questions = require("../app/models/Questions");
 var UserHomework = require("../app/models/UserHomework");
 var ClassNotes = require("../app/models/ClassNotes");
 var Answer = require("../app/models/Answers");
-var now = new Date();
+var now = Date.now();
 var modelDateArray = [
     {
         obj: ClassHomework,
@@ -38,7 +38,7 @@ var manageJob = new CronJob("0 0 * * *", function(){ //Cron job at 12 AM every d
             if(err) throw err;
             docs.forEach(function(doc){
                 var dateComp = new Date(doc[dateField]);
-                if(now.valueOf() - dateComp.valueOf() >= 1000*60*60*24*7*2){ //2 weeks in milliseconds
+                if(now - dateComp.getTime() >= 1000*60*60*24*7*2){ //2 weeks in milliseconds
                     doc.remove();
                 }
             });
