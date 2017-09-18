@@ -4,6 +4,7 @@ var ClassHomework = require("../app/models/ClassHomework");
 var Questions = require("../app/models/Questions");
 var UserHomework = require("../app/models/UserHomework");
 var ClassNotes = require("../app/models/ClassNotes");
+var Answer = require("../app/models/Answers");
 var now = new Date();
 var modelDateArray = [
     {
@@ -21,6 +22,10 @@ var modelDateArray = [
     {
         obj: ClassNotes,
         date: "date"
+    },
+    {
+        obj: Answer,
+        date: "dateAnswered"
     }
 ]
 //I'm using this array to make the job definiton extensible, adding a model and a date field to the array sets it up
