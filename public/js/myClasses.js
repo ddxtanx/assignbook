@@ -28,14 +28,12 @@ $(document).ready(function() {
     var datePicked;
     $("#date").change(function() {
         //This handler checks if #date changes, and when it does it shows homework that is assigned on that day, and hides homework that is not
-        datePicked = Date.parse($("#date").val()+1000*60*60*24);
+        datePicked = Date.parse($("#date").val()) + 1000*60*60*24;
         for (var x = 0; x < homeworkArray.length; x++) {
             var homeworkDueDate = Date.parse(homeworkArray[x].dueDate);
             if (datePicked == homeworkDueDate) {
-                console.log("Showing homework"+x);
                 $("#homework" + (x+1)).show("fast");
             } else {
-                console.log("Hiding homework"+x);
                 $("#homework" + (x+1)).hide("fast");
             }
             if (isNaN(datePicked)) {
@@ -170,20 +168,15 @@ $(document).ready(function() {
         }
     });
     $(".duedate").each(function(i, element){
-      console.log("running")
       var dueDate = element.attributes[1].value;
-      console.log(dueDate);
       var parts = dueDate.split("-");
       dueDate = new Date(parts[0], parts[1]-1, parts[2]);
-      console.log(dueDate);
       var today = new Date();
       var daysDiff = Date.dateDiff(today, dueDate)+1;
-      console.log(daysDiff);
       var adj = (daysDiff<0)?"ago":"away";
       daysDiff = Math.abs(daysDiff);
       var prefix = (daysDiff==1)?"day":"days";
       var sentence = (daysDiff==0)?" Today":" "+daysDiff+" "+prefix+" "+adj;
-      console.log(sentence);
       element.innerText=element.innerText+sentence;
     });
 });
