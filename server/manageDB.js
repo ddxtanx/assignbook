@@ -4,8 +4,6 @@ var ClassHomework = require("../app/models/ClassHomework");
 var Questions = require("../app/models/Questions");
 var UserHomework = require("../app/models/UserHomework");
 var ClassNotes = require("../app/models/ClassNotes");
-var Answer = require("../app/models/Answers");
-console.log(Answer);
 var now = Date.now();
 var modelDateArray = [
     {
@@ -45,7 +43,6 @@ var manageJob = new CronJob("0 0 * * *", function(){ //Cron job at 12 AM every d
 modelDateArray.forEach(function(modelDateObj){
     var model = modelDateObj.obj;
     var dateField = modelDateObj.date;
-    console.log(modelDateObj.date)
     model.find(function(err, docs){
         if(err) throw err;
         docs.forEach(function(doc){
