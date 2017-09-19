@@ -28,7 +28,7 @@ $(document).ready(function() {
     var datePicked;
     $("#date").change(function() {
         //This handler checks if #date changes, and when it does it shows homework that is assigned on that day, and hides homework that is not
-        datePicked = Date.parse($("#date").val());
+        datePicked = Date.parse($("#date").val()+1000*60*60*24);
         for (var x = 0; x < homeworkArray.length; x++) {
             var homeworkDueDate = Date.parse(homeworkArray[x].dueDate);
             if (datePicked == homeworkDueDate) {
