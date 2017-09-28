@@ -1,12 +1,23 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 version: v1.7.1
-ignore: {}
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'npm:mime:20170907':
+    - express > send > mime:
+        reason: No patch/Update
+        expires: '2017-10-28T12:02:29.105Z'
+    - express > serve-static > send > mime:
+        reason: No patch/Update
+        expires: '2017-10-28T12:02:29.105Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:ms:20170412':
     - compression > debug > ms:
         patched: '2017-06-20T23:23:15.071Z'
-      bcrypt > node-pre-gyp > tar-pack > debug > ms:
-        patched: '2017-07-18T18:32:43.658Z'
     - bcrypt > node-pre-gyp > tar-pack > debug > ms:
         patched: '2017-06-20T23:23:15.071Z'
+    - bcrypt > node-pre-gyp > tar-pack > debug > ms:
+        patched: '2017-07-18T18:32:43.658Z'
+  'npm:debug:20170905':
+    - mongoose > mquery > debug:
+        patched: '2017-09-28T12:00:54.263Z'
