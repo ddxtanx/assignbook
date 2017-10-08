@@ -1,1 +1,1 @@
-$(document).ready(function(){$("#error").hide(),"incorrect"==error&&($("#error").text("Email-Password combination not found, please try again"),$("#error").show())});
+$(document).ready(()=>{$("#error").hide(),"incorrect"===error&&($("#error").text("Email-Password combination not found, please try again"),$("#error").show())});

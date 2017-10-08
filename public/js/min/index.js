@@ -1,1 +1,1 @@
-$(document).ready(function(){1===isLoggedIn?$(".notLoggedIn").remove():$(".isLoggedIn").remove()});
+$(document).ready(()=>{1===isLoggedIn?$(".notLoggedIn").remove():$(".isLoggedIn").remove()});
