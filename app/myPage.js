@@ -1,7 +1,8 @@
-var UserClasses = require("./models/UserClasses.js"),
-UserHomework = require("./models/UserHomework.js"),
-Reminders = require("./models/Reminders.js"),
-async = require("async");
+const UserClasses = require("./models/UserClasses.js"),
+    UserHomework = require("./models/UserHomework.js"),
+    Reminders = require("./models/Reminders.js"),
+    async = require("async");
+
 function logData(req){
   if(req.session!==undefined){
     return {userName: req.session.name, email: req.session.email, loggedin: req.session.active, id:req.session.id};
@@ -11,16 +12,16 @@ function logData(req){
 }
 //Same logData as before
 function createDate(){
-  var DateObj = new Date();
-  var year = DateObj.getFullYear();
-  var month = DateObj.getMonth();
-  var day = DateObj.getDate();
-  var date = `${year}-${month}-${day}`;
-  return date;
+    const DateObj = new Date();
+    const year = DateObj.getFullYear();
+    const month = DateObj.getMonth();
+    const day = DateObj.getDate();
+    const date = `${year}-${month}-${day}`;
+    return date;
 }
 function pageData(req, res){
-  var userId = req.session.id;
-  async.parallel({
+    const userId = req.session.id;
+    async.parallel({
     classes: function(cb){
       UserClasses.find({userId: userId}, {_id: false}, {sort: 'classPeriod'}, function(err, classes){
         cb(err, classes)
@@ -46,24 +47,24 @@ function pageData(req, res){
   });
 }
 function addReminder(req, res){
-  var reminderText = req.body.reminder;
-  var userId = req.session.id;
-  var reminderID = Math.random()*Math.pow(10,18);
-  var date = createDate();
-  var NewReminder = new Reminders({
-    reminderText: reminderText,
-    dateCreated: date,
-    reminderID: reminderID,
-    userId: userId
-  });
-  NewReminder.save();
+    const reminderText = req.body.reminder;
+    const userId = req.session.id;
+    const reminderID = Math.random() * Math.pow(10, 18);
+    const date = createDate();
+    const NewReminder = new Reminders({
+        reminderText: reminderText,
+        dateCreated: date,
+        reminderID: reminderID,
+        userId: userId
+    });
+    NewReminder.save();
   //Create reminder
   res.end();
 }
 function completeReminder(req, res){
-  var reminderID = req.body.reminderID;
-  var userId = req.session.id;
-  Reminders.remove({
+    const reminderID = req.body.reminderID;
+    const userId = req.session.id;
+    Reminders.remove({
     reminderID: reminderID,
     userId: userId
   }, function(err, resp){
@@ -72,8 +73,8 @@ function completeReminder(req, res){
   })
 }
 function deleteCompleted(req, res){
-  var userId = req.session.id;
-  UserHomework.remove({
+    const userId = req.session.id;
+    UserHomework.remove({
     completed: true,
     userId: userId
   }, function(err, resp){
@@ -83,10 +84,10 @@ function deleteCompleted(req, res){
   })
 }
 function completeHomework(req, res){
-  var homeworkId = req.body.homeworkId;
-  var action = (req.body.action=="complete");
-  var userId = req.session.id;
-  UserHomework.update({
+    const homeworkId = req.body.homeworkId;
+    const action = (req.body.action == "complete");
+    const userId = req.session.id;
+    UserHomework.update({
     homeworkId: homeworkId,
     userId: userId
   }, {
@@ -105,4 +106,4 @@ module.exports = {
   completeReminder: completeReminder,
   deleteCompleted: deleteCompleted,
   completeHomework: completeHomework
-}
+};

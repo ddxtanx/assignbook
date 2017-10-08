@@ -1,9 +1,9 @@
-var mongoose = require('./connection');
-var schema = mongoose.Schema;
-var cookiesSchema = new schema({
-  cookieID: String,
-  userID: String,
-  username: String,
-  dateCreated: String
+const mongoose = require('./connection');
+const schema = mongoose.Schema;
+const cookiesSchema = new schema({
+    cookieID: String,
+    userID: String,
+    username: String,
+    dateCreated: String
 });
-var Cookies = mongoose.model("Cookies", cookiesSchema, "cookies");
+const Cookies = mongoose.model("Cookies", cookiesSchema, "cookies");

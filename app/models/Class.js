@@ -1,11 +1,11 @@
-var mongoose = require('./connection');
-var schema = mongoose.Schema;
-var classSchema = new schema({
-  name: String,
-  period: Number,
-  studentsEnrolled: Number,
-  teacherName: String,
-  userWhoAdded: String
+const mongoose = require('./connection');
+const schema = mongoose.Schema;
+const classSchema = new schema({
+    name: String,
+    period: Number,
+    studentsEnrolled: Number,
+    teacherName: String,
+    userWhoAdded: String
 });
-var Class = mongoose.model('Class', classSchema, "classes");
+const Class = mongoose.model('Class', classSchema, "classes");
 module.exports = Class;

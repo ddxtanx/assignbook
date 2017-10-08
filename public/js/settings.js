@@ -2,10 +2,10 @@ $(document).ready(function(){
   $("#passErr").hide();
   $("#passSuccess").hide();
   $("#changePass").click(function(){
-    var oldPass = $("#oldPass").val();
-    var newPass1 = $("#newPass1").val();
-    var newPass2 = $("#newPass2").val();
-    if(newPass1==newPass2){
+      const oldPass = $("#oldPass").val();
+      const newPass1 = $("#newPass1").val();
+      const newPass2 = $("#newPass2").val();
+      if(newPass1===newPass2){
       $.ajax({
         method:"POST",
         url:"changePass",

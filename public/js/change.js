@@ -1,10 +1,10 @@
 $(document).ready(function(){
   $("#error").hide();
-})
+});
 function resetPass(){
-  var pass1 = $("#pass1").val();
-  var pass2 = $("#pass2").val();
-  if(pass1==pass2){
+    const pass1 = $("#pass1").val();
+    const pass2 = $("#pass2").val();
+    if(pass1===pass2){
     $.ajax({
       method: "POST",
       data:{

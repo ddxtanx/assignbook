@@ -5,7 +5,7 @@ $(document).ready(function() {
     $("#warning").hide();
     //Hiding sections that will be revealed if needed
     $("#add").click(function() {
-        if (isLoggedIn == 1) {
+        if (isLoggedIn === 1) {
             //isLoggedIn is declared in classes.php
             $("#add").hide("fast");
             $("#addFormDiv").show("fast");
@@ -21,20 +21,20 @@ $(document).ready(function() {
         $("#addFormDiv").hide("fast");
         //If the user want's to cancel, hide the class creation form, and unhide the create button
     });
-    var element, period, name, teacher;
+    let element, period, name, teacher;
     //Classes array is declared in the php files that call getClasses, and it contains all of the classes' information
     $(".search").change(function() {
         //Whenever a search box is changed, classes that match those search values are displayed, and those who don't are hidden.
-        var nameSearchValue = $("#nameSearchBar").val();
-        var teacherSearchValue = $("#teacherSearchBar").val();
-        var period = $("#periodSearchBar").val();
-        for (var x = 0; x < classesArray.length; x++) {
-            var userClass = classesArray[x];
-            var nameCheck = (nameSearchValue === "") ? true : userClass.name.includes(nameSearchValue);
+        const nameSearchValue = $("#nameSearchBar").val();
+        const teacherSearchValue = $("#teacherSearchBar").val();
+        const period = $("#periodSearchBar").val();
+        for (let x = 0; x < classesArray.length; x++) {
+            const userClass = classesArray[x];
+            const nameCheck = (nameSearchValue === "") ? true : userClass.name.includes(nameSearchValue);
             //nameCheck is a variable that either checks if the nameSearchValue is empty, or, if that is not the case, checks if the search value is included in the classes' name name
-            var teacherCheck = (teacherSearchValue === "") ? true : userClass.teacherName.includes(teacherSearchValue);
+            const teacherCheck = (teacherSearchValue === "") ? true : userClass.teacherName.includes(teacherSearchValue);
             //teacherCheck functions like nameCheck, except it checks if the teacherSearchValue is included in the teacher's name
-            var periodCheck = (period === "") ? true : userClass.period == period;
+            const periodCheck = (period === "") ? true : userClass.period == period;
             //periodCheck, again, functions like the two variables above, except it checks if the period is equal
             if (!(nameCheck && teacherCheck && periodCheck)) {
                 $(".class" + (x+1)).hide("fast");
@@ -44,15 +44,15 @@ $(document).ready(function() {
         }
     });
     $(".delClass").click(function(){
-      var element = $(this);
-      var name = element.attr("name");
-      var period = element.attr("period")
-      var teacherName = element.attr("teacherName");
-      console.log({
+        const element = $(this);
+        const name = element.attr("name");
+        const period = element.attr("period");
+        const teacherName = element.attr("teacherName");
+        console.log({
         name: name,
         period: period,
         teacherName: teacherName
-      })
+      });
       $.ajax({
         method: "POST",
         url: "deleteClass",

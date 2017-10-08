@@ -1,9 +1,9 @@
 $(document).ready(function(){
   $("#successfull").hide();
-})
+});
 function requestpassword(){
-  var email = $("#email").val();
-  $.ajax({
+    const email = $("#email").val();
+    $.ajax({
     method:"POST",
     url:"forgot",
     data:{

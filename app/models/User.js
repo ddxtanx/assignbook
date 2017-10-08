@@ -1,11 +1,11 @@
-var mongoose = require('./connection');
-var schema = mongoose.Schema;
-var userSchema = new schema({
-  username: String,
-  email: String,
-  password: String,
-  id: String,
-  ip: String
+const mongoose = require('./connection');
+const schema = mongoose.Schema;
+const userSchema = new schema({
+    username: String,
+    email: String,
+    password: String,
+    id: String,
+    ip: String
 });
-var User = mongoose.model('User', userSchema, "users");
+const User = mongoose.model('User', userSchema, "users");
 module.exports = User;

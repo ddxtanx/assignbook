@@ -1,10 +1,10 @@
 //This file handles everything on the myClasses page
 Date.dateDiff = function(fromdate, todate) {
-  var diff = todate - fromdate;
-  var divideBy = 86400000
+    const diff = todate - fromdate;
+    const divideBy = 86400000;
 
-  return Math.floor( diff/divideBy);
-}
+    return Math.floor( diff/divideBy);
+};
 function ajaxPost(ajaxUrl, ajaxData, callback) {
     $.ajax({
         method: "POST",
@@ -25,13 +25,13 @@ $(document).ready(function() {
     $("#reminderForm").hide();
     //Hides elements that might be unhidden later
     //homeworkArray, classesArray, and remindersArray are all declared in myClasses.php
-    var datePicked;
+    let datePicked;
     $("#date").change(function() {
         //This handler checks if #date changes, and when it does it shows homework that is assigned on that day, and hides homework that is not
         datePicked = Date.parse($("#date").val()) + 1000*60*60*24;
-        for (var x = 0; x < homeworkArray.length; x++) {
-            var homeworkDueDate = Date.parse(homeworkArray[x].dueDate);
-            if (datePicked == homeworkDueDate) {
+        for (let x = 0; x < homeworkArray.length; x++) {
+            const homeworkDueDate = Date.parse(homeworkArray[x].dueDate);
+            if (datePicked === homeworkDueDate) {
                 $("#homework" + (x+1)).show("fast");
             } else {
                 $("#homework" + (x+1)).hide("fast");
@@ -44,11 +44,11 @@ $(document).ready(function() {
     });
     $(".checks").click(function() {
         //.checks, when checked, completes the homework in the database
-        var ele = $(this);
-        var hId = ele.attr("homeworkId");
-        var hideCompleted = ($("#showCompleted").is(":checked")) ? false : true;
-        var whatAmIDoing = (ele.is(":checked")) ? "completing" : "uncompleting";
-        if (whatAmIDoing == "completing") {
+        const ele = $(this);
+        const hId = ele.attr("homeworkId");
+        const hideCompleted = (!$("#showCompleted").is(":checked"));
+        const whatAmIDoing = (ele.is(":checked")) ? "completing" : "uncompleting";
+        if (whatAmIDoing === "completing") {
             //Here AJAX requests are sent out to complete the homework, so everything appears seamless on the UI
             ajaxPost("completeHomework", {
               homeworkId: hId,
@@ -79,7 +79,7 @@ $(document).ready(function() {
             });
         }
     });
-    var showingCompleted = false;
+    let showingCompleted = false;
     $(".completed").hide();
     $("#showCompleted").change(function() {
         //If showingCompleted is true, then the page shows all completed items. If it is false, all completed items are hidden
@@ -133,8 +133,8 @@ $(document).ready(function() {
     //These two buttons hide or show the Reminder Creation form, and the create and cancel buttons.
     $(".reminderChecks").click(function() {
         //This functions like the homework check, and completes the reminders in the database
-        var ele = $(this);
-        var id = ele.attr("reminderID");
+        const ele = $(this);
+        const id = ele.attr("reminderID");
         ajaxPost("completeReminder", {
           reminderID: id,
           _csrf: token
@@ -149,16 +149,16 @@ $(document).ready(function() {
     //Classes array is declared in the php files that call getClasses, and it contains all of the classes' information
     $(".search").change(function() {
         //Whenever a search box is changed, classes that match those search values are displayed, and those who don't are hidden.
-        var nameSearchValue = $("#nameSearchBar").val();
-        var teacherSearchValue = $("#teacherSearchBar").val();
-        var period = $("#periodSearchBar").val();
-        for (var x = 0; x < classesArray.length; x++) {
-            var userClass = classesArray[x];
-            var nameCheck = (nameSearchValue === "") ? true : userClass.className.includes(nameSearchValue);
+        const nameSearchValue = $("#nameSearchBar").val();
+        const teacherSearchValue = $("#teacherSearchBar").val();
+        const period = $("#periodSearchBar").val();
+        for (let x = 0; x < classesArray.length; x++) {
+            const userClass = classesArray[x];
+            const nameCheck = (nameSearchValue === "") ? true : userClass.className.includes(nameSearchValue);
             //nameCheck is a variable that either checks if the nameSearchValue is empty, or, if that is not the case, checks if the search value is included in the classes' name name
-            var teacherCheck = (teacherSearchValue === "") ? true : userClass.classTeacher.includes(teacherSearchValue);
+            const teacherCheck = (teacherSearchValue === "") ? true : userClass.classTeacher.includes(teacherSearchValue);
             //teacherCheck functions like nameCheck, except it checks if the teacherSearchValue is included in the teacher's name
-            var periodCheck = (period === "") ? true : userClass.classPeriod == period;
+            const periodCheck = (period === "") ? true : userClass.classPeriod == period;
             //periodCheck, again, functions like the two variables above, except it checks if the period is equal
             if (!(nameCheck && teacherCheck && periodCheck)) {
                 $(".class" + (x+1)).hide("fast");
@@ -168,21 +168,21 @@ $(document).ready(function() {
         }
     });
     $(".duedate").each(function(i, element){
-      var dueDate = element.attributes[1].value;
-      var parts = dueDate.split("-");
-      dueDate = new Date(parts[0], parts[1]-1, parts[2]);
-      var today = new Date();
-      var daysDiff = Date.dateDiff(today, dueDate)+1;
-      var adj = (daysDiff<0)?"ago":"away";
-      daysDiff = Math.abs(daysDiff);
-      var prefix = (daysDiff==1)?"day":"days";
-      var sentence = (daysDiff==0)?" Today":" "+daysDiff+" "+prefix+" "+adj;
-      element.innerText=element.innerText+sentence;
+        let dueDate = element.attributes[1].value;
+        const parts = dueDate.split("-");
+        dueDate = new Date(parts[0], parts[1]-1, parts[2]);
+        const today = new Date();
+        let daysDiff = Date.dateDiff(today, dueDate) + 1;
+        const adj = (daysDiff < 0) ? "ago" : "away";
+        daysDiff = Math.abs(daysDiff);
+        const prefix = (daysDiff == 1) ? "day" : "days";
+        const sentence = (daysDiff == 0) ? " Today" : " " + daysDiff + " " + prefix + " " + adj;
+        element.innerText=element.innerText+sentence;
     });
 });
 function addreminder(){
-  var reminderText = $("#reminder").val().replace(/\r?\n|\r/g, " ");
-  $.ajax({
+    const reminderText = $("#reminder").val().replace(/\r?\n|\r/g, " ");
+    $.ajax({
     method:"POST",
     url:"addReminder",
     data:{

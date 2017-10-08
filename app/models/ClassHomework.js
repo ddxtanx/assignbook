@@ -1,14 +1,14 @@
-var mongoose = require('./connection');
-var schema = mongoose.Schema;
-var classHomeworkSchema = new schema({
-  assignmentName: String,
-  dueDate: String,
-  description: String,
-  className: String,
-  classPeriod: Number,
-  classTeacher: String,
-  userId: String,
-  homeworkId: String
+const mongoose = require('./connection');
+const schema = mongoose.Schema;
+const classHomeworkSchema = new schema({
+    assignmentName: String,
+    dueDate: String,
+    description: String,
+    className: String,
+    classPeriod: Number,
+    classTeacher: String,
+    userId: String,
+    homeworkId: String
 });
-var ClassHomework = mongoose.model("ClassHomework", classHomeworkSchema, "classHomework");
+const ClassHomework = mongoose.model("ClassHomework", classHomeworkSchema, "classHomework");
 module.exports = ClassHomework;

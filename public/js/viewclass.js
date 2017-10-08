@@ -1,18 +1,18 @@
 Date.prototype.toDateInputValue = (function() {
-    var local = new Date(this);
+    const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
     //This helps to default the date inputs to today's dats
 });
 
 function hide(arrayOfIdsToHide) {
-    for (var x = 0; x < arrayOfIdsToHide.length; x++) {
+    for (let x = 0; x < arrayOfIdsToHide.length; x++) {
         $(arrayOfIdsToHide[x]).hide();
     }
     //This hides every id in an array
 }
 $(document).ready(function() {
-    var hides = ["#addHomework", "#cancelQButton", "#addQuestion", "#notLoggedIn", "#notEnrolled", "#notEnrolledNotes", "#notEnrolledQuestions", "#addNotesForm"];
+    const hides = ["#addHomework", "#cancelQButton", "#addQuestion", "#notLoggedIn", "#notEnrolled", "#notEnrolledNotes", "#notEnrolledQuestions", "#addNotesForm"];
     hide(hides);
     //All of the id's in hides are now hidden
     $(".notLoggedIn").remove();
@@ -54,10 +54,10 @@ $(document).ready(function() {
         $("#enroll").remove();
     }
     //Removes the oppertunity to enroll if the user is not loggedin
-    var datePicked;
+    let datePicked;
     $("#date").change(function() {
         datePicked = Date.parse($("#date").val());
-        for (var x = 0; x < homeworkArray.length; x++) {
+        for (let x = 0; x < homeworkArray.length; x++) {
             //Displays homework if it is assigned on a specific day, and hides it if it is not assigned.
             homeworkDueDate = Date.parse(homeworkArray[x].dueDate);
             if (datePicked <= homeworkDueDate) {
@@ -98,10 +98,10 @@ $(document).ready(function() {
     });
     //Cancels the notes form when clicked
     $("#notesDate").change(function() {
-        var newDate = Date.parse($("#notesDate").val());
-        for (var x = 0; x < notesArray.length; x++) {
-            var datePosted = Date.parse(notesArray[x].date);
-            if (newDate != datePosted) {
+        const newDate = Date.parse($("#notesDate").val());
+        for (let x = 0; x < notesArray.length; x++) {
+            const datePosted = Date.parse(notesArray[x].date);
+            if (newDate !== datePosted) {
                 $(".notes" + (x+1)).hide("fast");
             } else {
                 $(".notes" + (x+1)).show("fast");
@@ -129,9 +129,9 @@ $(document).ready(function() {
     });
     //Cancels the question form
     $(".delNote").click(function(){
-      var ele = $(this);
-      var noteId = ele.attr("noteId");
-      $.ajax({
+        const ele = $(this);
+        const noteId = ele.attr("noteId");
+        $.ajax({
         method: "POST",
         url: "deleteNote",
         data:{
@@ -149,9 +149,9 @@ $(document).ready(function() {
       });
     });
     $(".qDelete").click(function(){
-      var ele = $(this);
-      var qId = ele.attr("questionId");
-      $.ajax({
+        const ele = $(this);
+        const qId = ele.attr("questionId");
+        $.ajax({
         method:"POST",
         url:"deleteQuestion",
         data:{
@@ -167,12 +167,12 @@ $(document).ready(function() {
           alert(JSON.stringify(data));
         }
       })
-    })
+    });
     $(".aDelete").click(function(){
-      var ele = $(this);
-      var qId = ele.attr("questionId");
-      var aId = ele.attr("answerId");
-      $.ajax({
+        const ele = $(this);
+        const qId = ele.attr("questionId");
+        const aId = ele.attr("answerId");
+        $.ajax({
         method:"POST",
         url:"deleteAnswer",
         data:{
@@ -189,11 +189,11 @@ $(document).ready(function() {
           alert(JSON.stringify(data));
         }
       })
-    })
+    });
     $(".dHomework").click(function(){
-      var ele = $(this);
-      var hId = ele.attr("homeworkId");
-      $.ajax({
+        const ele = $(this);
+        const hId = ele.attr("homeworkId");
+        $.ajax({
         method: "POST",
         url:"deleteHomework",
         data:{
@@ -231,10 +231,10 @@ function enroll(name, period, teacher){
   })
 }
 function addHomework(){
-  var assignmentName = $("#homeworkName").val(),
-  description = $("#homeworkDescription").val().replace(/\r?\n|\r/g, " "),
-  dueDate = $("#homeworkDate").val();
-  console.log(assignmentName);
+    const assignmentName = $("#homeworkName").val(),
+        description = $("#homeworkDescription").val().replace(/\r?\n|\r/g, " "),
+        dueDate = $("#homeworkDate").val();
+    console.log(assignmentName);
   $.ajax({
     method: "POST",
     url: "addHomework",
@@ -256,8 +256,8 @@ function addHomework(){
   })
 }
 function addNotes(){
-  var note = $("#notesText").val();
-  $.ajax({
+    const note = $("#notesText").val();
+    $.ajax({
     method: "POST",
     url: "addNotes",
     data: {
@@ -276,9 +276,9 @@ function addNotes(){
   })
 }
 function addQuestion(){
-  var question = $("#question").val();
-  var anonymous = $("#anonymous").is(":checked");
-  $.ajax({
+    const question = $("#question").val();
+    const anonymous = $("#anonymous").is(":checked");
+    $.ajax({
     method: "POST",
     url: "addQuestion",
     data:{
@@ -298,9 +298,9 @@ function addQuestion(){
   });
 }
 function addAnswer(questionId, qNumber){
-  var answer = $("#answer"+qNumber).val();
-  var anon = $("#anonCheckbox"+qNumber).is(":checked");
-  console.log(anon);
+    const answer = $("#answer" + qNumber).val();
+    const anon = $("#anonCheckbox" + qNumber).is(":checked");
+    console.log(anon);
   $.ajax({
     method: "POST",
     url: "addAnswer",

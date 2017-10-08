@@ -1,10 +1,11 @@
-var opbeat = require('opbeat').start();
-var cluster = require("cluster");
-var escape = require("underscore").escape;
+const opbeat = require('opbeat').start();
+const cluster = require("cluster");
+const escape = require("underscore").escape;
+
 function escapeMiddleware(req, res, next){
-  if(process.env.env=="prod"){
+  if(process.env.env === "prod"){
     if(req.headers.host!==undefined){
-      if(req.headers.host=="assignbook.herokuapp.com"){
+      if(req.headers.host === "assignbook.herokuapp.com"){
         Object.keys(req.body).map(function(key, index){
           console.log(req.body[key]);
           req.body[key] = escape(req.body[key]);
@@ -24,8 +25,8 @@ function escapeMiddleware(req, res, next){
   }
 }
 if(cluster.isMaster){
-  var cpuCount = require('os').cpus().length;
-   for (var i = 0; i < cpuCount; i += 1) {
+    const cpuCount = require('os').cpus().length;
+    for (let i = 0; i < cpuCount; i += 1) {
        cluster.fork();
    }
    cluster.on('exit', function (worker) {
@@ -33,22 +34,21 @@ if(cluster.isMaster){
       cluster.fork();
   });
 } else{
-  var express = require("express"),
-  bodyParser = require("body-parser"),
-  sessions = require("client-sessions"),
-  account = require("../app/account.js"),
-  classes = require("../app/classes.js"),
-  myPage = require("../app/myPage.js"),
-  compression = require("compression"),
-  path=require("path"),
-  helmet=require("helmet"),
-  expressEnforcesSsl = require("express-enforces-ssl"),
-  csrf = require("csurf"),
-  csrfProtection = csrf({ cookie: false }),
-  manageJob = require("./manageDB");
-  manageJob.start();
-  var server = express();
-  server.set('views', './public');
+    const express = require("express"),
+        bodyParser = require("body-parser"),
+        sessions = require("client-sessions"),
+        account = require("../app/account.js"),
+        classes = require("../app/classes.js"),
+        myPage = require("../app/myPage.js"),
+        compression = require("compression"),
+        helmet = require("helmet"),
+        expressEnforcesSsl = require("express-enforces-ssl"),
+        csrf = require("csurf"),
+        csrfProtection = csrf({cookie: false}),
+        manageJob = require("./manageDB");
+    manageJob.start();
+    const server = express();
+    server.set('views', './public');
   server.enable('trust proxy');
   server.use(bodyParser(), escapeMiddleware, express.static("./public", { maxAge: 86400000 }), sessions({
     cookieName: "session",
@@ -56,7 +56,7 @@ if(cluster.isMaster){
     duration: 7 * 24 * 60 * 60 * 1000,
     activeDuration: 7 * 24 * 60 * 60 * 1000 //Cookies are valid for 1 week
   }), compression(), opbeat.middleware.express(), helmet());
-  if(process.env.env=="prod"){
+  if(process.env.env === "prod"){
     server.use(expressEnforcesSsl());
   }
   function checkIn(req, res, callback){
@@ -76,7 +76,7 @@ if(cluster.isMaster){
     }
   }
   server.get("/*", function(req, res, next){
-    if(req.session==undefined){
+    if(req.session === undefined){
       req.session = {};
       req.session.active = false;
       req.session.name = "";
@@ -189,7 +189,7 @@ if(cluster.isMaster){
   });
   server.post("/change", function(req, res){
     account.change(req, res);
-  })
+  });
   server.get("/public/*", function(req, res){
     res.end();
   });
@@ -228,7 +228,7 @@ if(cluster.isMaster){
       account.changeRequest(req, res);
     });
   });
-  var PORT = process.env.PORT;
-  console.log(`SERVER LISTENING ON PORT ${PORT}`);
+    const PORT = process.env.PORT;
+    console.log(`SERVER LISTENING ON PORT ${PORT}`);
   server.listen(PORT);
 }
