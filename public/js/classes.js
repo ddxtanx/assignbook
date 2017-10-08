@@ -34,7 +34,7 @@ $(document).ready(function() {
             //nameCheck is a variable that either checks if the nameSearchValue is empty, or, if that is not the case, checks if the search value is included in the classes' name name
             const teacherCheck = (teacherSearchValue === "") ? true : userClass.teacherName.includes(teacherSearchValue);
             //teacherCheck functions like nameCheck, except it checks if the teacherSearchValue is included in the teacher's name
-            const periodCheck = (period === "") ? true : userClass.period == period;
+            const periodCheck = (period === "") ? true : userClass.period === period;
             //periodCheck, again, functions like the two variables above, except it checks if the period is equal
             if (!(nameCheck && teacherCheck && periodCheck)) {
                 $(".class" + (x+1)).hide("fast");

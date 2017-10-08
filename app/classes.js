@@ -401,7 +401,7 @@ function addQuestion(req, res){
 }
 function addAnswer(req, res){
     const answer = req.body.answer;
-    const anon = (req.body.anonymous == 'true');
+    const anon = (req.body.anonymous === 'true');
     const displayedName = (anon) ? "Anonymous" : req.session.name;
     //Anonymity is same as question
     const questionId = req.body.questionId;

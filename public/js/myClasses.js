@@ -158,7 +158,7 @@ $(document).ready(function() {
             //nameCheck is a variable that either checks if the nameSearchValue is empty, or, if that is not the case, checks if the search value is included in the classes' name name
             const teacherCheck = (teacherSearchValue === "") ? true : userClass.classTeacher.includes(teacherSearchValue);
             //teacherCheck functions like nameCheck, except it checks if the teacherSearchValue is included in the teacher's name
-            const periodCheck = (period === "") ? true : userClass.classPeriod == period;
+            const periodCheck = (period === "") ? true : userClass.classPeriod === period;
             //periodCheck, again, functions like the two variables above, except it checks if the period is equal
             if (!(nameCheck && teacherCheck && periodCheck)) {
                 $(".class" + (x+1)).hide("fast");
@@ -175,8 +175,8 @@ $(document).ready(function() {
         let daysDiff = Date.dateDiff(today, dueDate) + 1;
         const adj = (daysDiff < 0) ? "ago" : "away";
         daysDiff = Math.abs(daysDiff);
-        const prefix = (daysDiff == 1) ? "day" : "days";
-        const sentence = (daysDiff == 0) ? " Today" : " " + daysDiff + " " + prefix + " " + adj;
+        const prefix = (daysDiff === 1) ? "day" : "days";
+        const sentence = (daysDiff === 0) ? " Today" : " " + daysDiff + " " + prefix + " " + adj;
         element.innerText=element.innerText+sentence;
     });
 });

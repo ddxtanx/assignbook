@@ -85,7 +85,7 @@ function deleteCompleted(req, res){
 }
 function completeHomework(req, res){
     const homeworkId = req.body.homeworkId;
-    const action = (req.body.action == "complete");
+    const action = (req.body.action === "complete");
     const userId = req.session.id;
     UserHomework.update({
     homeworkId: homeworkId,
