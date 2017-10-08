@@ -1,1 +1,1 @@
-$(document).ready(()=>{$("#hamDiv").click(e=>{e.preventDefault(),$("#wrapper").toggleClass("toggled")})});
+$(document).ready(function(){$("#hamDiv").click(function(e){e.preventDefault(),$("#wrapper").toggleClass("toggled")})});
