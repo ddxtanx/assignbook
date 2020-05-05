@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.7.1
+version: v1.14.1
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   'npm:mime:20170907':
@@ -21,3 +21,6 @@ patch:
   'npm:debug:20170905':
     - mongoose > mquery > debug:
         patched: '2017-09-28T12:00:54.263Z'
+  SNYK-JS-LODASH-567746:
+    - mongoose > async > lodash:
+        patched: '2020-05-05T21:05:43.066Z'
