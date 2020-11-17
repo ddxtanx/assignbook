@@ -29,7 +29,7 @@
     "helmet": "^3.8.2",
     "mongoose": "^4.11.3",
     "ms": "^2.0.0",
-    "nodemailer": "^4.0.1",
+    "nodemailer": "^6.4.16",
     "opbeat": "^4.15.1",
     "secure-random": "^1.1.1",
     "snyk": "^1.38.0",
